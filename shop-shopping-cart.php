@@ -68,19 +68,21 @@ include('header.php');
                 <div class="table-wrapper-responsive">
                 <table summary="Shopping cart">
                   <tr>
-                    <th class="goods-page-image">Image</th>
-                    <th class="goods-page-description">Description</th>
+                    <th class="goods-page-image">Imagem</th>
+                    <th class="goods-page-description">Descrição</th>
                     <th class="goods-page-ref-no">Ref No</th>
-                    <th class="goods-page-quantity">Quantity</th>
-                    <th class="goods-page-price">Unit price</th>
+                    <th class="goods-page-quantity">Quantidade</th>
+                    <th class="goods-page-price">Preço Unit</th>
                     <th class="goods-page-total" colspan="2">Total</th>
                   </tr>
+
+                  <?php foreach($_SESSION['cart'] as $key => $value){ ?>
                   <tr>
                     <td class="goods-page-image">
-                      <a href="javascript:;"><img src="assets/pages/img/products/model3.jpg" alt="Berry Lace Dress"></a>
+                      <a href="javascript:;"><img src="assets/pages/img/prodcrispel/<?php echo $value['prod_imagem'];?>" alt="Berry Lace Dress"></a>
                     </td>
                     <td class="goods-page-description">
-                      <h3><a href="javascript:;">Cool green dress with red bell</a></h3>
+                      <h3><a href="javascript:;"><?php echo $value['prod_nome'];?></a></h3>
                       <p><strong>Item 1</strong> - Color: Green; Size: S</p>
                       <em>More info is here</em>
                     </td>
@@ -89,19 +91,23 @@ include('header.php');
                     </td>
                     <td class="goods-page-quantity">
                       <div class="product-quantity">
-                          <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
+                          <input id="product-quantity" type="text" value="<?php echo $value['prod_quant'];?>" readonly class="form-control input-sm">
                       </div>
                     </td>
                     <td class="goods-page-price">
-                      <strong><span>$</span>47.00</strong>
+                      <strong><span>R$</span><?php echo $value['prod_preco'];?></strong>
                     </td>
                     <td class="goods-page-total">
                       <strong><span>$</span>47.00</strong>
                     </td>
                     <td class="del-goods-col">
-                      <a class="del-goods" href="javascript:;">&nbsp;</a>
+                      <form method="POST" action="shop-shopping-cart.php">
+                        <input type="hidden" name="idproduto" value="<?php echo $value['idproduto'];?>"/>
+                        <input type="submit" name="remove_product" class="remove-btn" value="remove"/>&nbsp;
+                      </form>
                     </td>
                   </tr>
+                  <?php } ?>
                 </table>
                 </div>
 

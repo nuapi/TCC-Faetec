@@ -654,3 +654,11 @@ Inline Social Icons
 	opacity: 0;
 	transition: 0.3s all;
 }
+.cart .remove-btn{
+    color:#ff0000;
+    text-decoration: none;
+    font-size: 14px;
+    background-color: #fff;
+    border: none;
+    width: 100%;
+}
