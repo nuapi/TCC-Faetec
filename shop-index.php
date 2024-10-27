@@ -91,31 +91,34 @@ include('header.php');
         </div>
     </div>
     <!-- END SLIDER -->
-     <!-- begin featured -->
-      <section id="featured" class="my-5 pb-5">
-        <div class="container text-center mt-5 py-5">
-          <h3> Destaques </h3>
-          <hr>
-          <p>Mais vendidos</p>
+
+    <div class="main">
+      <div class="container">
+        <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
+        <div class="row margin-bottom-40">
+          <h2>Mais Pedidos</h2>
+          <div class="row">
+            <?php include('get_featured_products.php'); ?>
+            <?php while($row=$featured_products->fetch_assoc()) { ?>
+              <!-- BEGIN SALE PRODUCT -->
+              <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
+                <div class="product-item">
+                  <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
+                    <img src="./assets/prodcrispel/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                    <div>
+                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
+                    </div>
+                  </div>
+                  <h3><a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>"><?php echo $row['prod_nome'];?></a></h3>
+                  <div class="pi-price">R$ <?php echo $row['prod_preco'];?></div>
+                  <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default add2cart">Carrinho</a>
+                  <div class="sticker sticker-sale"></div>
+                </div>
+              </div>
+              <!-- END SALE PRODUCT -->
+            <?php } ?>
+          </div>
         </div>
-        <div class="row mx-auto container-fluid">
-          <?php include('get_featured_products.php'); ?>
-
-          <?php while($row= $featured_products->fetch_assoc()) { ?>
-        <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-          <img class="img-fluid mb-3" src="assets/prodcrispel/<?php echo $row['prod_imagem']?>"/>
-
-          <br/>
-          <h5 class="p-name"><?php echo $row['prod_nome']?></h5>
-          <h4 class="p-price">R$ <?php echo $row['prod_preco']?></h4>
-          <button class="btn btn-default add2cart">Comprar</button>
-        </div>
-
-        <?php } ?>
-      </div>
-      </section>
-
-
         <!-- END SALE PRODUCT & NEW ARRIVALS -->
 
         <!-- BEGIN SIDEBAR & CONTENT -->

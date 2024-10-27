@@ -2,7 +2,7 @@
 
 include('connection.php');
 
-$stmt = $conn->prepare("SELECT * FROM produto LIMIT 4");
+$stmt = $conn->prepare("SELECT * FROM produto LIMIT 3");
 
 $stmt->execute();
 

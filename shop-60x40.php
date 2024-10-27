@@ -1,340 +1,28 @@
-<!DOCTYPE html>
-<!--
-Template: Metronic Frontend Freebie - Responsive HTML Template Based On Twitter Bootstrap 3.3.4
-Version: 1.0.0
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en">
-<!--<![endif]-->
+<?php 
+include('connection.php');
 
-<!-- Head BEGIN -->
-<head>
-  <meta charset="utf-8">
-  <title>Cool green dress with red bell | Metronic Shop UI</title>
+if (isset($_GET['idproduto'])) {
+    $idproduto = $_GET['idproduto'];
+    
+    $stmt = $conn->prepare("SELECT * FROM produto WHERE idproduto = ?");
+    $stmt -> bind_param("i", $idproduto);
 
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    $stmt->execute();
 
-  <meta content="Metronic Shop UI description" name="description">
-  <meta content="Metronic Shop UI keywords" name="keywords">
-  <meta content="keenthemes" name="author">
+    $products = $stmt->get_result();
 
-  <meta property="og:site_name" content="-CUSTOMER VALUE-">
-  <meta property="og:title" content="-CUSTOMER VALUE-">
-  <meta property="og:description" content="-CUSTOMER VALUE-">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
-  <meta property="og:url" content="-CUSTOMER VALUE-">
+    
+} else {
+    echo "ID do produto não especificado.";
+}
+?>
 
-  <link rel="shortcut icon" href="favicon.ico">
 
-  <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"> 
-  <!-- Fonts END -->
 
-  <!-- Global styles START -->          
-  <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Global styles END --> 
-   
-  <!-- Page level plugin styles START -->
-  <link href="assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
-  <link href="assets/plugins/owl.carousel/assets/owl.carousel.css" rel="stylesheet">
-  <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"><!-- for slider-range -->
-  <link href="assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
-  <!-- Page level plugin styles END -->
+<?php 
+include('header.php');
 
-  <!-- Theme styles START -->
-  <link href="assets/pages/css/components.css" rel="stylesheet">
-  <link href="assets/corporate/css/style.css" rel="stylesheet">
-  <link href="assets/pages/css/style-shop.css" rel="stylesheet" type="text/css">
-  <link href="assets/corporate/css/style-responsive.css" rel="stylesheet">
-  <link href="assets/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
-  <link href="assets/corporate/css/custom.css" rel="stylesheet">
-  <!-- Theme styles END -->
-</head>
-<!-- Head END -->
-
-<!-- Body BEGIN -->
-<body class="ecommerce">
-    <!-- BEGIN STYLE CUSTOMIZER -->
-    <div class="color-panel hidden-sm">
-      <div class="color-mode-icons icon-color"></div>
-      <div class="color-mode-icons icon-color-close"></div>
-      <div class="color-mode">
-        <p>THEME COLOR</p>
-        <ul class="inline">
-          <li class="color-red current color-default" data-style="red"></li>
-          <li class="color-blue" data-style="blue"></li>
-          <li class="color-green" data-style="green"></li>
-          <li class="color-orange" data-style="orange"></li>
-          <li class="color-gray" data-style="gray"></li>
-          <li class="color-turquoise" data-style="turquoise"></li>
-        </ul>
-      </div>
-    </div>
-    <!-- END BEGIN STYLE CUSTOMIZER --> 
-
-<!-- BEGIN TOP BAR -->
-<div class="pre-header">
-  <div class="container">
-      <div class="row">
-          <!-- BEGIN TOP BAR LEFT PART -->
-          <div class="col-md-6 col-sm-6 additional-shop-info">
-              <ul class="list-unstyled list-inline">
-                  <li><i class="fa fa-phone"></i><span>(24) 23233-2323</span></li>
-              </ul>
-          </div>
-          <!-- END TOP BAR LEFT PART -->
-          <!-- BEGIN TOP BAR MENU -->
-          <div class="col-md-6 col-sm-6 additional-nav">
-              <ul class="list-unstyled list-inline pull-right">
-                  <li><a href="shop-account.html">Minha Conta</a></li>
-                  <li><a href="shop-wishlist.html">Lista de Desejos</a></li>
-                  <li><a href="shop-checkout.html">Checkout</a></li>
-                  <li><a href="page-login.html">Log In</a></li>
-                  <li><a href="page-login.html">Admin</a></li>
-              </ul>
-          </div>
-          <!-- END TOP BAR MENU -->
-      </div>
-  </div>        
-</div>
-<!-- END TOP BAR -->
-
-    <!-- BEGIN HEADER -->
-    <div class="header">
-      <div class="container">
-        <a class="site-logo" href="shop-index.html"><img src="./assets/logocrispel/crispel (1) (1) (1).png" alt="Metronic Shop UI"></a>
-
-        <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
-
-        <!-- BEGIN CART -->
-        <div class="top-cart-block">
-          <div class="top-cart-info">
-            <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
-            <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
-          </div>
-          <i class="fa fa-shopping-cart"></i>
-                        
-          <div class="top-cart-content-wrapper">
-            <div class="top-cart-content">
-              <ul class="scroller" style="height: 250px;">
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-              </ul>
-              <div class="text-right">
-                <a href="shop-shopping-cart.html" class="btn btn-default">View Cart</a>
-                <a href="shop-checkout.html" class="btn btn-primary">Checkout</a>
-              </div>
-            </div>
-          </div>            
-        </div>
-        <!--END CART -->
-
-        <!-- BEGIN NAVIGATION -->
-        <div class="header-navigation">
-          <ul>
-            <li class="dropdown dropdown-megamenu">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Etiquetas
-                
-              </a>
-                
-              <!-- BEGIN DROPDOWN MENU -->
-              <ul class="dropdown-menu">
-                <li>
-                  <div class="header-navigation-content">
-                    <div class="row">
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Para Balanças</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">60x30</a></li>
-                          <li><a href="shop-product-list.html">60x40</a></li>
-                          <li><a href="shop-product-list.html">60x60</a></li>
-                          <li><a href="shop-product-list.html">40x30</a></li>
-                          <li><a href="shop-product-list.html">40x40</a></li>
-                          <li><a href="shop-product-list.html">40x60</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Para Gôndolas</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">105x40</a></li>
-                          <li><a href="shop-product-list.html">108x30</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Para Código de Barras</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">33x22</a></li>
-                          <li><a href="shop-product-list.html">33x26</a></li>
-                        </ul>
-                        <div class="col-md-4 header-navigation-col">
-                          <h4>Precificadoras</h4>
-                          <ul>
-                            <li><a href="shop-product-list.html">MX</a></li>
-                          </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown dropdown-megamenu">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Bobinas
-                
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <div class="header-navigation-content">
-                    <div class="row">
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Lisa</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">80x40</a></li>
-                          <li><a href="shop-product-list.html">80x80</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Personalizada</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">80x40</a></li>
-                          <li><a href="shop-product-list.html">80x80</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Accessories</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">Belts</a></li>
-                          <li><a href="shop-product-list.html">Caps</a></li>
-                          <li><a href="shop-product-list.html">Gloves, Hats and Scarves</a></li>
-                        </ul>
-
-                        
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li><a href="shop-product-list.html">Ribbons</a></li>
-            <li class="dropdown dropdown100 nav-catalogue">
-              
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-                Contato 
-                
-              </a>
-                
-              <ul class="dropdown-menu">
-                <li class="active"><a href="shop-index.html">Home Default</a></li>
-                <li><a href="shop-index-header-fix.html">Home Header Fixed</a></li>
-                <li><a href="shop-index-light-footer.html">Home Light Footer</a></li>
-                <li><a href="shop-product-list.html">Product List</a></li>
-                <li><a href="shop-search-result.html">Search Result</a></li>
-                <li><a href="shop-item.html">Product Page</a></li>
-                <li><a href="shop-shopping-cart-null.html">Shopping Cart (Null Cart)</a></li>
-                <li><a href="shop-shopping-cart.html">Shopping Cart</a></li>
-                <li><a href="shop-checkout.html">Checkout</a></li>
-                <li><a href="shop-about.html">About</a></li>
-                <li><a href="shop-contacts.html">Contacts</a></li>
-                <li><a href="shop-account.html">My account</a></li>
-                <li><a href="shop-wishlist.html">My Wish List</a></li>
-                <li><a href="shop-goods-compare.html">Product Comparison</a></li>
-                <li><a href="shop-standart-forms.html">Standart Forms</a></li>
-                <li><a href="shop-faq.html">FAQ</a></li>
-                <li><a href="shop-privacy-policy.html">Privacy Policy</a></li>
-                <li><a href="shop-terms-conditions-page.html">Terms &amp; Conditions</a></li>
-              </ul>
-            </li>
-
-            <!-- BEGIN TOP SEARCH -->
-            <li class="menu-search">
-              <span class="sep"></span>
-              <i class="fa fa-search search-btn"></i>
-              <div class="search-box">
-                <form action="#">
-                  <div class="input-group">
-                    <input type="text" placeholder="Search" class="form-control">
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary" type="submit">Procurar</button>
-                    </span>
-                  </div>
-                </form>
-              </div> 
-            </li>
-            <!-- END TOP SEARCH -->
-          </ul>
-        </div>
-        <!-- END NAVIGATION -->
-      </div>
-    </div>
-    <!-- Header END -->
+?>
     
     <div class="main">
       <div class="container">
@@ -441,9 +129,14 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
           <div class="col-md-9 col-sm-7">
             <div class="product-page">
               <div class="row">
+                <form method="POST" action="shop-shopping-cart.php">
+                  <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
+                  <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
+                  <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
+              <?php while($row = $products->fetch_assoc()) { ?>
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src="./assets/pages/img/products/60x40 (1).png" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="./assets/pages/img/products/60x40 (1).png">
+                    <img src="./assets/pages/img/prodcrispel/<?php echo $row['prod_imagem'];?>" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="./assets/pages/img/prodcrispel/<?php echo $row['prod_imagem'];?>">
                   </div>
                   <div class="product-other-images">
                     <a href="assets/pages/img/products/model3.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="assets/pages/img/products/model3.jpg"></a>
@@ -452,18 +145,17 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <h1>Etiqueta térmica 60x40m</h1>
+                  <h1><?php echo $row['prod_nome'];?></h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
-                      <strong><span>R$</span>80,00</strong>
-                      <em>R$<span>120,00</span></em>
+                      <strong><span>R$</span><?php echo $row['prod_preco'];?></strong>
                     </div>
                     <div class="availability">
                       Disponibilidade: <strong>Em estoque</strong>
                     </div>
                   </div>
                   <div class="description">
-                    <p>Caixa com etiquetas térmicas lisas 60x40m</p>
+                    <p><?php echo $row['prod_desc'];?></p>
                   </div>
                   <div class="product-page-options">
                     <div class="pull-left">
@@ -487,28 +179,26 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="submit">Carrinho</button>
+                  <form method="POST" action="shop-shopping-cart.php">
+                  <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
+                  <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
+                  <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
+                  <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
+                  <input type="hidden" name="prod_quant" value="<?php echo $row['prod_quant'];?>" readonly class="form-control input-sm">
+                  <button class="btn btn-primary" type="submit" name="add_to_cart">Carrinho</button>
+                  </form>
                   </div>
                   <div class="review">
                     <input type="range" value="4" step="0.25" id="backing4">
                     <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                     </div>
-                    <a href="javascript:;">7 reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;">Write a review</a>
                   </div>
-                  <ul class="social-icons">
-                    <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
-                    <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
-                    <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
-                    <li><a class="evernote" data-original-title="evernote" href="javascript:;"></a></li>
-                    <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
-                  </ul>
                 </div>
 
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
                     <li><a href="#Description" data-toggle="tab">Description</a></li>
                     <li><a href="#Information" data-toggle="tab">Information</a></li>
-                    <li class="active"><a href="#Reviews" data-toggle="tab">Reviews (2)</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade" id="Description">
@@ -541,63 +231,12 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                         </tr>
                       </table>
                     </div>
-                    <div class="tab-pane fade in active" id="Reviews">
-                      <!--<p>There are no reviews for this product.</p>-->
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>Bob</strong>
-                          <em>30/12/2013 - 07:37</em>
-                          <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>Sed velit quam, auctor id semper a, hendrerit eget justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis vel arcu pulvinar dolor tempus feugiat id in orci. Phasellus sed erat leo. Donec luctus, justo eget ultricies tristique, enim mauris bibendum orci, a sodales lectus purus ut lorem.</p>
-                        </div>
-                      </div>
-                      <div class="review-item clearfix">
-                        <div class="review-item-submitted">
-                          <strong>Mary</strong>
-                          <em>13/12/2013 - 17:49</em>
-                          <div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                        </div>                                              
-                        <div class="review-item-content">
-                            <p>Sed velit quam, auctor id semper a, hendrerit eget justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis vel arcu pulvinar dolor tempus feugiat id in orci. Phasellus sed erat leo. Donec luctus, justo eget ultricies tristique, enim mauris bibendum orci, a sodales lectus purus ut lorem.</p>
-                        </div>
-                      </div>
-
-                      <!-- BEGIN FORM-->
-                      <form action="#" class="reviews-form" role="form">
-                        <h2>Write a review</h2>
-                        <div class="form-group">
-                          <label for="name">Name <span class="require">*</span></label>
-                          <input type="text" class="form-control" id="name">
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="text" class="form-control" id="email">
-                        </div>
-                        <div class="form-group">
-                          <label for="review">Review <span class="require">*</span></label>
-                          <textarea class="form-control" rows="8" id="review"></textarea>
-                        </div>
-                        <div class="form-group">
-                          <label for="email">Rating</label>
-                          <input type="range" value="4" step="0.25" id="backing5">
-                          <div class="rateit" data-rateit-backingfld="#backing5" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                          </div>
-                        </div>
-                        <div class="padding-top-20">                  
-                          <button type="submit" class="btn btn-primary">Send</button>
-                        </div>
-                      </form>
-                      <!-- END FORM--> 
-                    </div>
                   </div>
                 </div>
-
-                <div class="sticker sticker-sale"></div>
               </div>
             </div>
           </div>
+          <?php } ?>
           <!-- END CONTENT -->
         </div>
         <!-- END SIDEBAR & CONTENT -->

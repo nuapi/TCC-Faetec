@@ -186,8 +186,8 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                 </li>
               </ul>
               <div class="text-right">
-                <a href="shop-shopping-cart.html" class="btn btn-default">View Cart</a>
-                <a href="shop-checkout.html" class="btn btn-primary">Checkout</a>
+                <a href="shop-shopping-cart.php" class="btn btn-default">View Cart</a>
+                <a href="shop-checkout.php" class="btn btn-primary">Checkout</a>
               </div>
             </div>
           </div>            
