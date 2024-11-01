@@ -10,7 +10,9 @@ if(isset($_POST['add_to_cart'])){
     //se o produto ja foi adicionado ao carrinho
     if(!in_array($_POST['idproduto'], $prod_array_ids)){
 
-    $prod_array = array(
+      $idproduto = $_POST['idproduto'];
+    
+      $prod_array = array(
       'idproduto' => $_POST['idproduto'],
       'prod_nome' => $_POST['prod_nome'],
       'prod_preco' => $_POST['prod_preco'],
@@ -46,8 +48,60 @@ if(isset($_POST['add_to_cart'])){
     $_SESSION['cart'][$idproduto] = $prod_array;
   }
 
-}else{
-  //header('location: shop-index.php');
+  //calcular total
+  calculateTotalCart();
+
+
+
+//remover do carrinho
+}else if(isset($_POST['remove_product'])){
+
+  $idproduto = $_POST['idproduto'];
+  unset($_SESSION['cart'][$idproduto]);
+  //calcular total
+  calculateTotalCart();
+
+}else if(isset($_POST['edit_quantity'])){
+
+  //pegar id e quantidade do form
+  $idproduto = $_POST['idproduto'];
+  $prod_quant = $_POST['prod_quant'];
+
+  //pegar o array da sessao
+  $product_array = $_SESSION['cart'][$idproduto];
+
+  //atualizar a quantidade do produto
+  $product_array['prod_quant'] = $prod_quant;
+
+  //retornar array para seu lugar
+  $_SESSION['cart'][$idproduto] = $product_array;
+
+  //calcular total
+  calculateTotalCart();
+
+}
+else{
+  header('location: shop-index.php');
+}
+
+
+
+function calculateTotalCart(){
+
+  $total = 0;
+
+  foreach($_SESSION['cart'] as $key => $value){
+    
+    $produto = $_SESSION['cart'][$key];
+
+    $preco = $produto['prod_preco'];
+    $quant = $produto['prod_quant'];
+
+    $total = $total + ($preco * $quant);
+  }
+
+  $_SESSION['total'] = $total;
+
 }
 
 ?>
@@ -91,14 +145,19 @@ include('header.php');
                     </td>
                     <td class="goods-page-quantity">
                       <div class="product-quantity">
-                          <input id="product-quantity" type="text" value="<?php echo $value['prod_quant'];?>" readonly class="form-control input-sm">
+                          <form method="post" action="shop-shopping-cart.php">
+                            <input type="hidden" name="idproduto" value="<?php echo $value['idproduto'];?>"/>
+                            <input type="number" name="prod_quant" value="<?php echo $value['prod_quant'];?>"/>
+                            <input type="submit" class="edit-btn" value="edit" name="edit_quantity"/>
+
+                          </form>
                       </div>
                     </td>
                     <td class="goods-page-price">
                       <strong><span>R$</span><?php echo $value['prod_preco'];?></strong>
                     </td>
                     <td class="goods-page-total">
-                      <strong><span>$</span>47.00</strong>
+                      <strong><span>R$</span><?php echo $value['prod_preco'] * $value['prod_quant'];?></strong>
                     </td>
                     <td class="del-goods-col">
                       <form method="POST" action="shop-shopping-cart.php">
@@ -123,12 +182,12 @@ include('header.php');
                     </li>
                     <li class="shopping-total-price">
                       <em>Total</em>
-                      <strong class="price"><span>$</span>50.00</strong>
+                      <strong class="price"><span>R$</span><?php echo $_SESSION['total'];?></strong>
                     </li>
                   </ul>
                 </div>
               </div>
-              <button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button>
+              <a href="shop-product-list.php"><button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button></a>
               <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
             </div>
           </div>
