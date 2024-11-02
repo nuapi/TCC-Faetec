@@ -160,10 +160,10 @@ include('header.php');
                   <div class="product-page-options">
                     <div class="pull-left">
                       <label class="control-label">Quantidade:</label>
-                      <select class="form-control input-sm">
-                        <option>100</option>
-                        <option>150</option>
-                        <option>200</option>
+                      <select class="form-control input-sm" name="prod_quant" id="prod_quant">
+                        <option value="100">100</option>
+                        <option value="150">150</option>
+                        <option value="200">200</option>
                       </select>
                     </div>
                     <div class="pull-left">
@@ -176,17 +176,13 @@ include('header.php');
                     </div>
                   </div>
                   <div class="product-page-cart">
-                    <div class="product-quantity">
-                        <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
-                    </div>
-                  <form method="POST" action="shop-shopping-cart.php">
-                  <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
-                  <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
-                  <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
-                  <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
-                  <input type="hidden" name="prod_quant" value="<?php echo $row['prod_quant'];?>" readonly class="form-control input-sm">
-                  <button class="btn btn-primary" type="submit" name="add_to_cart">Carrinho</button>
-                  </form>
+                    <form method="POST" action="shop-shopping-cart.php">
+                      <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
+                      <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
+                      <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
+                      <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
+                      <button class="btn btn-primary" type="submit" name="add_to_cart">Carrinho</button>
+                    </form>
                   </div>
                   <div class="review">
                     <input type="range" value="4" step="0.25" id="backing4">
@@ -197,7 +193,7 @@ include('header.php');
 
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
-                    <li><a href="#Description" data-toggle="tab">Description</a></li>
+                    <li><a href="#Description" data-toggle="tab" class="active">Description</a></li>
                     <li><a href="#Information" data-toggle="tab">Information</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">

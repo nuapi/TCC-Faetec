@@ -1,3 +1,23 @@
+<?php
+// Safe session start
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Inicializa as variáveis do carrinho
+$cart_count = 0;
+$cart_total = 0;
+
+// Verifica se existe carrinho na sessão e calcula os totais
+if(isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    foreach($_SESSION['cart'] as $item) {
+        $cart_count += $item['prod_quant'];
+        $cart_total += $item['prod_quant'] * $item['prod_preco'];
+    }
+}
+?>
+<!-- Rest of the HTML remains the same -->
+
 <!DOCTYPE html>
 <!--
 Template: Metronic Frontend Freebie - Responsive HTML Template Based On Twitter Bootstrap 3.3.4
@@ -60,6 +80,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
   <link href="assets/corporate/css/style-responsive.css" rel="stylesheet">
   <link href="assets/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
   <link href="assets/corporate/css/custom.css" rel="stylesheet">
+  <link href="assets/pages/css/style2.css" rel="stylesheet">
   <!-- Theme styles END -->
 </head>
 <!-- Head END -->
@@ -118,79 +139,44 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
         <!-- BEGIN CART -->
+        <!-- Substitua a div top-cart-block existente por esta -->
         <div class="top-cart-block">
-          <div class="top-cart-info">
-            <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
-            <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
-          </div>
-          <i class="fa fa-shopping-cart"></i>
-                        
-          <div class="top-cart-content-wrapper">
-            <div class="top-cart-content">
-              <ul class="scroller" style="height: 250px;">
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-                <li>
-                  <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x 1</span>
-                  <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                  <em>$1230</em>
-                  <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-                </li>
-              </ul>
-              <div class="text-right">
-                <a href="shop-shopping-cart.php" class="btn btn-default">View Cart</a>
-                <a href="shop-checkout.php" class="btn btn-primary">Checkout</a>
-              </div>
+            <div class="top-cart-info">
+                <a href="javascript:void(0);" class="top-cart-info-count"><?php echo $cart_count; ?> items</a>
+                <a href="javascript:void(0);" class="top-cart-info-value">R$ <?php echo number_format($cart_total, 2, ',', '.'); ?></a>
             </div>
-          </div>            
+            <i class="fa fa-shopping-cart"></i>
+                                
+            <div class="top-cart-content-wrapper">
+                <div class="top-cart-content">
+                    <ul class="scroller" style="height: 250px;">
+                        <?php
+                        if(isset($_SESSION['carrinho']) && count($_SESSION['carrinho']) > 0) {
+                            foreach($_SESSION['carrinho'] as $item) {
+                                ?>
+                                <li>
+                                    <a href="shop-item.html">
+                                        <img src="./assets/pages/img/prodcrispel/<?php echo $item['prod_imagem']; ?>" 
+                                            alt="<?php echo $item['prod_nome']; ?>" width="37" height="34">
+                                    </a>
+                                    <span class="cart-content-count">x <?php echo $item['prod_quant']; ?></span>
+                                    <strong><a href="shop-item.html"><?php echo $item['prod_nome']; ?></a></strong>
+                                    <em>R$ <?php echo number_format($item['prod_preco'], 2, ',', '.'); ?></em>
+                                    <a href="remove-from-cart.php?id=<?php echo $item['idproduto']; ?>" class="del-goods">&nbsp;</a>
+                                </li>
+                                <?php
+                            }
+                        } else {
+                            echo '<li class="text-center">Carrinho vazio</li>';
+                        }
+                        ?>
+                    </ul>
+                    <div class="text-right">
+                        <a href="shop-shopping-cart.php" class="btn btn-default">Ver Carrinho</a>
+                        <a href="shop-checkout.php" class="btn btn-primary">Finalizar Compra</a>
+                    </div>
+                </div>
+            </div>            
         </div>
         <!--END CART -->
 

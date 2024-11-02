@@ -1,0 +1,45 @@
+/* Estilo para o container da quantidade */
+.product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Estilo para o input de quantidade */
+.product-quantity input[type="number"] {
+    width: 60px;
+    height: 30px;
+    padding: 2px 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Remove as setas do input number */
+.product-quantity input[type="number"]::-webkit-inner-spin-button,
+.product-quantity input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Estilo unificado para os botões de editar e remover */
+.edit-btn, .remove-btn {
+    padding: 5px 10px;
+    background: #ff0000; /* Cor do botão de Checkout */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+}
+
+.edit-btn:hover, .remove-btn:hover {
+    background: #c13b0b; /* Cor mais escura no hover */
+}
+
+/* Ajuste para o container dos botões */
+.del-goods-col {
+    width: 100px; /* Ajusta largura da coluna */
+}
