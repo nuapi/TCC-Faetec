@@ -6,12 +6,8 @@ if (isset($_GET['idproduto'])) {
     
     $stmt = $conn->prepare("SELECT * FROM produto WHERE idproduto = ?");
     $stmt -> bind_param("i", $idproduto);
-
     $stmt->execute();
-
     $products = $stmt->get_result();
-
-    
 } else {
     echo "ID do produto não especificado.";
 }
@@ -136,11 +132,11 @@ include('header.php');
               <?php while($row = $products->fetch_assoc()) { ?>
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                  <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"
-                    alt="Produto" 
-                    class="img-responsive" 
-                    style="width: 300px; height: auto;"
-                    data-BigImgsrc="./assets/prodG/<?php echo $row['prod_imagem2'];?>">
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"
+                      alt="Produto" 
+                      class="img-responsive" 
+                      style="width: 300px; height: auto;"
+                      data-BigImgsrc="./assets/prodG/<?php echo $row['prod_imagem2'];?>">
                   </div>
                   <div class="product-other-images">
                     <a href="assets/pages/img/products/model3.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
@@ -149,6 +145,12 @@ include('header.php');
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
+                <form method="POST" action="shop-shopping-cart.php">
+                  <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
+                  <input type="hidden" name="prod_imagem2" value="<?php echo $row['prod_imagem2'];?>"/>
+                  <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
+                  <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
+                  
                   <h1><?php echo $row['prod_nome'];?></h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
@@ -178,20 +180,16 @@ include('header.php');
                     </div>
                   </div>
                   <div class="product-page-cart">
-                    <form method="POST" action="shop-shopping-cart.php">
-                      <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
-                      <input type="hidden" name="prod_imagem2" value="<?php echo $row['prod_imagem2'];?>"/>
-                      <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
-                      <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
-                      <button class="btn btn-primary" type="submit" name="add_to_cart">Carrinho</button>
-                    </form>
+                    <button class="btn btn-primary" type="submit" name="add_to_cart">Adicionar ao Carrinho</button>
                   </div>
-                  <div class="review">
-                    <input type="range" value="4" step="0.25" id="backing4">
-                    <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                    </div>
+                </form>
+                
+                <div class="review">
+                  <input type="range" value="4" step="0.25" id="backing4">
+                  <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                   </div>
                 </div>
+              </div>
 
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">

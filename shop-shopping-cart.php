@@ -89,22 +89,22 @@ else{
 
 
 function calculateTotalCart(){
+  $subtotal = 0;
+  $frete = 50.00; // Frete fixo de R$ 50,00
 
-  $total = 0;
-
-  foreach($_SESSION['cart'] as $key => $value){
-    
+  foreach($_SESSION['cart'] as $key => $value){    
     $produto = $_SESSION['cart'][$key];
-
     $preco = $produto['prod_preco'];
     $quant = $produto['prod_quant'];
-
-    $total = $total + ($preco * $quant);
+    $subtotal = $subtotal + ($preco * $quant);
   }
 
-  $_SESSION['total'] = $total;
-
+  $_SESSION['subtotal'] = $subtotal;
+  $_SESSION['frete'] = $frete;
+  $_SESSION['total'] = $subtotal + $frete;
 }
+
+
 
 ?>
 
@@ -177,21 +177,21 @@ include('header.php');
                 </div>
 
                 <div class="shopping-total">
-                  <ul>
-                    <li>
-                      <em>Sub total</em>
-                      <strong class="price"><span>R$</span>-</strong>
-                    </li>
-                    <li>
-                      <em>Frete</em>
-                      <strong class="price"><span>R$</span>-</strong>
-                    </li>
-                    <li class="shopping-total-price">
-                      <em>Total</em>
-                      <strong class="price"><span>R$</span><?php echo $_SESSION['total'];?></strong>
-                    </li>
-                  </ul>
-                </div>
+                <ul>
+                  <li>
+                    <em>Sub total</em>
+                    <strong class="price"><span>R$</span><?php echo $_SESSION['subtotal'];?></strong>
+                  </li>
+                  <li>
+                    <em>Frete</em>
+                    <strong class="price"><span>R$</span><?php echo $_SESSION['frete'];?></strong>
+                  </li>
+                  <li class="shopping-total-price">
+                    <em>Total</em>
+                    <strong class="price"><span>R$</span><?php echo $_SESSION['total'];?></strong>
+                  </li>
+                </ul>
+              </div>
               </div>
               <a href="shop-product-list.php"><button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button></a>
               <form method="POST" action="shop-checkout.php">

@@ -152,7 +152,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
         <!-- BEGIN NAVIGATION -->
         <div class="header-navigation">
           <ul>
-            <li><a href="shop-product-list.php">Etiquetas</a></li>
+            <li><a href="shop-product-list-etiqueta.php">Etiquetas</a></li>
                 
             <li><a href="shop-product-list-bobina.php">Bobinas</a></li>
                 

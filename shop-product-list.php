@@ -4,8 +4,8 @@ include('header.php');
 
     <div class="title-wrapper">
       <div class="container"><div class="container-inner">
-        <h1><span>ETIQUETAS</span> TÉRMICAS</h1>
-        <em>Escolha já o tamanho da sua etiqueta!</em>
+        <h1><span>NOSSOS</span> PRODUTOS</h1>
+        <em>Variedade de etiquetas, bobinas e ribbons!</em>
       </div></div>
     </div>
 
@@ -13,7 +13,7 @@ include('header.php');
       <div class="container">
         <ul class="breadcrumb">
             <li><a href="shop-index.php">Início</a></li>
-            <li class="active">Etiquetas</li>
+            <li class="active">Loja</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -148,8 +148,8 @@ include('header.php');
             </div>
             <!-- BEGIN PRODUCT LIST -->
             <div class="row product-list">
-            <?php include('get_etiquetas.php'); ?>
-            <?php while($row=$etiqueta_products->fetch_assoc()) { ?>
+            <?php include('get_all.php'); ?>
+            <?php while($row=$all_products->fetch_assoc()) { ?>
               <!-- PRODUCT ITEM START -->
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
@@ -192,22 +192,16 @@ include('header.php');
       </div>
     </div>
 
-    <!-- BEGIN BRANDS -->
-    <div class="brands">
+<!-- BEGIN BRANDS -->
+<div class="brands">
       <div class="container">
             <div class="owl-carousel owl-carousel6-brands">
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
+              <a href="shop-product-list.php"><img src="./assets/pages/img/brands/filizola.png" alt="filizola" title="filizola"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/toledo.png" alt="toledo" title="toledo"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/weightech.jpg" alt="weightech" title="weightech"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/urano.png" alt="urano" title="urano"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/triunfo.png" alt="triunfo" title="triunfo"></a>
+              <a href="shop-product-list.html"><img src="assets/pages/img/brands/digitron.png" alt="digitron" title="digitron"></a>
             </div>
         </div>
     </div>

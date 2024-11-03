@@ -4,8 +4,8 @@ include('header.php');
 
     <div class="title-wrapper">
       <div class="container"><div class="container-inner">
-        <h1><span>BOBINAS</span> TÉRMICAS</h1>
-        <em>Escolha já o tamanho da sua Bobina!</em>
+        <h1><span>ETIQUETAS</span> TÉRMICAS</h1>
+        <em>Escolha já o tamanho da sua etiqueta!</em>
       </div></div>
     </div>
 
@@ -13,7 +13,7 @@ include('header.php');
       <div class="container">
         <ul class="breadcrumb">
             <li><a href="shop-index.php">Início</a></li>
-            <li class="active">Bobinas</li>
+            <li class="active">Etiquetas</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -148,8 +148,8 @@ include('header.php');
             </div>
             <!-- BEGIN PRODUCT LIST -->
             <div class="row product-list">
-            <?php include('get_bobinas.php'); ?>
-            <?php while($row=$bobina_products->fetch_assoc()) { ?>
+            <?php include('get_etiquetas.php'); ?>
+            <?php while($row=$etiqueta_products->fetch_assoc()) { ?>
               <!-- PRODUCT ITEM START -->
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">

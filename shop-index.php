@@ -126,7 +126,7 @@ include('header.php');
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-4">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Etiquetas</a></li>
+              <li class="list-group-item clearfix"><a href="shop-product-list-etiqueta.php"><i class="fa fa-angle-right"></i> Etiquetas</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list-bobina.php"><i class="fa fa-angle-right"></i> Bobinas</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Ribbons</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Personalizados</a></li>
@@ -137,95 +137,27 @@ include('header.php');
           <!-- END SIDEBAR -->
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-8">
-            <h2>Three items</h2>
-            <div class="owl-carousel owl-carousel3">
-              <div>
+            <h2>Etiquetas</h2>
+            <div class="row">
+            <?php include('get_3_etiqueta.php'); ?>
+            <?php while($row=$etiqueta2_products->fetch_assoc()) { ?>
+              <!-- BEGIN SALE PRODUCT -->
+              <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                  <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
-                      <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                      <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                  <div class="sticker sticker-new"></div>
+                  <h3><a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>"><?php echo $row['prod_nome'];?></a></h3>
+                  <div class="pi-price">R$ <?php echo $row['prod_preco'];?></div>
+                  <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default add2cart">Comprar</a>
                 </div>
               </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress2</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress3</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress4</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                  <div class="sticker sticker-sale"></div>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress5</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress6</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-            </div>
+              <!-- END SALE PRODUCT -->
+            <?php } ?>
+          </div>
           </div>
           <!-- END CONTENT -->
         </div>
@@ -310,7 +242,7 @@ include('header.php');
                   <div class="image-overlay">
                       <div class="overlay-text">
                           <h3 style="color: white; margin-bottom: 15px;">Bobinas Térmicas</h3>
-                          <a href="shop-product-list.php" class="btn-overlay">Ver Produtos</a>
+                          <a href="shop-product-list-bobina.php" class="btn-overlay">Ver Produtos</a>
                       </div>
                   </div>
               </div>
@@ -336,18 +268,12 @@ include('header.php');
     <div class="brands">
       <div class="container">
             <div class="owl-carousel owl-carousel6-brands">
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
+              <a href="shop-product-list.php"><img src="./assets/pages/img/brands/filizola.png" alt="filizola" title="filizola"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/toledo.png" alt="toledo" title="toledo"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/weightech.jpg" alt="weightech" title="weightech"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/urano.png" alt="urano" title="urano"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/triunfo.png" alt="triunfo" title="triunfo"></a>
+              <a href="shop-product-list.html"><img src="assets/pages/img/brands/digitron.png" alt="digitron" title="digitron"></a>
             </div>
         </div>
     </div>
