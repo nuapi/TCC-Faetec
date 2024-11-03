@@ -142,41 +142,10 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
         <!-- Substitua a div top-cart-block existente por esta -->
         <div class="top-cart-block">
             <div class="top-cart-info">
-                <a href="javascript:void(0);" class="top-cart-info-count"><?php echo $cart_count; ?> items</a>
-                <a href="javascript:void(0);" class="top-cart-info-value">R$ <?php echo number_format($cart_total, 2, ',', '.'); ?></a>
+                <a href="shop-shopping-cart.php" class="top-cart-info-count"><?php echo $cart_count; ?> itens</a>
+                <a href="shop-shopping-cart.php" class="top-cart-info-value">R$ <?php echo number_format($cart_total, 2, ',', '.'); ?></a>
             </div>
-            <i class="fa fa-shopping-cart"></i>
-                                
-            <div class="top-cart-content-wrapper">
-                <div class="top-cart-content">
-                    <ul class="scroller" style="height: 250px;">
-                        <?php
-                        if(isset($_SESSION['carrinho']) && count($_SESSION['carrinho']) > 0) {
-                            foreach($_SESSION['carrinho'] as $item) {
-                                ?>
-                                <li>
-                                    <a href="shop-item.html">
-                                        <img src="./assets/pages/img/prodcrispel/<?php echo $item['prod_imagem']; ?>" 
-                                            alt="<?php echo $item['prod_nome']; ?>" width="37" height="34">
-                                    </a>
-                                    <span class="cart-content-count">x <?php echo $item['prod_quant']; ?></span>
-                                    <strong><a href="shop-item.html"><?php echo $item['prod_nome']; ?></a></strong>
-                                    <em>R$ <?php echo number_format($item['prod_preco'], 2, ',', '.'); ?></em>
-                                    <a href="remove-from-cart.php?id=<?php echo $item['idproduto']; ?>" class="del-goods">&nbsp;</a>
-                                </li>
-                                <?php
-                            }
-                        } else {
-                            echo '<li class="text-center">Carrinho vazio</li>';
-                        }
-                        ?>
-                    </ul>
-                    <div class="text-right">
-                        <a href="shop-shopping-cart.php" class="btn btn-default">Ver Carrinho</a>
-                        <a href="shop-checkout.php" class="btn btn-primary">Finalizar Compra</a>
-                    </div>
-                </div>
-            </div>            
+            <a href="shop-shopping-cart.php"><i class="fa fa-shopping-cart"></i></a>            
         </div>
         <!--END CART -->
 
@@ -185,7 +154,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
           <ul>
             <li><a href="shop-product-list.php">Etiquetas</a></li>
                 
-            <li><a href="shop-product-list.php">Bobinas</a></li>
+            <li><a href="shop-product-list-bobina.php">Bobinas</a></li>
                 
             <li><a href="shop-product-list.php">Ribbons</a></li>
             <li><a href="javascript:;">Contato </a></li>

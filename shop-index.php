@@ -104,14 +104,14 @@ include('header.php');
               <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
-                    <img src="./assets/prodcrispel/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
+                      <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>
                   </div>
                   <h3><a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>"><?php echo $row['prod_nome'];?></a></h3>
                   <div class="pi-price">R$ <?php echo $row['prod_preco'];?></div>
-                  <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default add2cart">Carrinho</a>
+                  <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default add2cart">Comprar</a>
                   <div class="sticker sticker-sale"></div>
                 </div>
               </div>
@@ -127,7 +127,7 @@ include('header.php');
           <div class="sidebar col-md-3 col-sm-4">
             <ul class="list-group margin-bottom-25 sidebar-menu">
               <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Etiquetas</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Bobinas</a></li>
+              <li class="list-group-item clearfix"><a href="shop-product-list-bobina.php"><i class="fa fa-angle-right"></i> Bobinas</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Ribbons</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Personalizados</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Sports</a></li>
@@ -231,124 +231,104 @@ include('header.php');
         </div>
         <!-- END SIDEBAR & CONTENT -->
 
-        <!-- BEGIN TWO PRODUCTS & PROMO -->
-        <div class="row margin-bottom-35 ">
-          <!-- BEGIN TWO PRODUCTS -->
-          <div class="col-md-6 two-items-bottom-items">
-            <h2>Personalizados</h2>
-            <div class="owl-carousel owl-carousel2">
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="./assets/prodcrispel/40x40.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
-                    </div>
+        <!-- BEGIN TWO FIXED IMAGES -->
+      <style>
+      .image-container {
+          position: relative;
+          overflow: hidden;
+          margin-bottom: 20px;
+          border-radius: 4px;
+      }
+
+      .image-container img {
+          width: 100%;
+          height: auto;
+          max-height: 400px;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+      }
+
+      .image-container:hover img {
+          transform: scale(1.05);
+      }
+
+      .image-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all 0.3s ease;
+      }
+
+      .image-container:hover .image-overlay {
+          background: rgba(0, 0, 0, 0.5);
+          opacity: 1;
+      }
+
+      .overlay-text {
+          color: white;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          transform: translateY(20px);
+          transition: transform 0.3s ease;
+      }
+
+      .image-container:hover .overlay-text {
+          transform: translateY(0);
+      }
+
+      .btn-overlay {
+          padding: 10px 20px;
+          background-color: #ff0000;
+          color: white;
+          text-decoration: none;
+          border-radius: 4px;
+          margin-top: 10px;
+          display: inline-block;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn-overlay:hover {
+          background-color: #ff0000;
+          color: white;
+          text-decoration: none;
+      }
+      </style>
+
+      <div class="row margin-bottom-35">
+          <!-- First Image -->
+          <div class="col-md-6">
+              <div class="image-container">
+                  <img src="assets/pages/img/index-sliders/bobina.jpg" alt="Bobinas">
+                  <div class="image-overlay">
+                      <div class="overlay-text">
+                          <h3 style="color: white; margin-bottom: 15px;">Bobinas Térmicas</h3>
+                          <a href="shop-product-list.php" class="btn-overlay">Ver Produtos</a>
+                      </div>
                   </div>
-                  <h3><a href="shop-item.html">Etiqueta 40x40</a></h3>
-                  <div class="pi-price">R$ 120,00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Carrinho</a>
-                </div>
               </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="./assets/prodcrispel/bobina.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Bobina 80x40</a></h3>
-                  <div class="pi-price">R$ 120,00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Carrinho</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-            </div>
           </div>
-          <!-- END TWO PRODUCTS -->
-          <!-- BEGIN PROMO -->
-          <div class="col-md-6 shop-index-carousel">
-            <div class="content-slider">
-              <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#myCarousel" data-slide-to="1"></li>
-                  <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <img src="assets/pages/img/index-sliders/bobina.jpg" class="img-responsive" alt="Berry Lace Dress">
+          <!-- Second Image -->
+          <div class="col-md-6">
+              <div class="image-container">
+                  <img src="assets/pages/img/index-sliders/ribbon.jpg" alt="Ribbons">
+                  <div class="image-overlay">
+                      <div class="overlay-text">
+                          <h3 style="color: white; margin-bottom: 15px;">Ribbons</h3>
+                          <a href="shop-product-list.php" class="btn-overlay">Ver Produtos</a>
+                      </div>
                   </div>
-                  <div class="item">
-                    <img src="assets/pages/img/index-sliders/bobina (1).jpg" class="img-responsive" alt="Berry Lace Dress">
-                  </div>
-                  <div class="item">
-                    <img src="assets/pages/img/index-sliders/ribbon.jpg" class="img-responsive" alt="Berry Lace Dress">
-                  </div>
-                </div>
               </div>
-            </div>
           </div>
-          <!-- END PROMO -->
-        </div>        
-        <!-- END TWO PRODUCTS & PROMO -->
+      </div>
+<!-- END TWO FIXED IMAGES -->
       </div>
     </div>
 

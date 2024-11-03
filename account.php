@@ -109,262 +109,15 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
     </div>
     <!-- END BEGIN STYLE CUSTOMIZER --> 
 
-    <!-- BEGIN TOP BAR -->
-    <div class="pre-header">
-      <div class="container">
-          <div class="row">
-              <!-- BEGIN TOP BAR LEFT PART -->
-              <div class="col-md-6 col-sm-6 additional-shop-info">
-                  <ul class="list-unstyled list-inline">
-                      <li><i class="fa fa-phone"></i><span>(24) 23233-2323</span></li>
-                  </ul>
-              </div>
-              <!-- END TOP BAR LEFT PART -->
-              <!-- BEGIN TOP BAR MENU -->
-              <div class="col-md-6 col-sm-6 additional-nav">
-                  <ul class="list-unstyled list-inline pull-right">
-                      <li><a href="shop-account.html">Minha Conta</a></li>
-                      <li><a href="shop-wishlist.html">Lista de Desejos</a></li>
-                      <li><a href="shop-checkout.html">Checkout</a></li>
-                      <li><a href="page-login.html">Entrar</a></li>
-                  </ul>
-              </div>
-              <!-- END TOP BAR MENU -->
-          </div>
-      </div>        
-  </div>
-  <!-- END TOP BAR -->
-
-  <!-- BEGIN HEADER -->
-  <div class="header">
-    <div class="container">
-      <a class="site-logo" href="shop-index.html"><img src="./assets/logocrispel/crispel (1) (1) (1).png" alt="Metronic Shop UI"></a>
-
-      <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
-
-      <!-- BEGIN CART -->
-      <div class="top-cart-block">
-        <div class="top-cart-info">
-          <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
-          <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
-        </div>
-        <i class="fa fa-shopping-cart"></i>
-                      
-        <div class="top-cart-content-wrapper">
-          <div class="top-cart-content">
-            <ul class="scroller" style="height: 250px;">
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-              <li>
-                <a href="shop-item.html"><img src="assets/pages/img/cart-img.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
-                <span class="cart-content-count">x 1</span>
-                <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-                <em>$1230</em>
-                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-              </li>
-            </ul>
-            <div class="text-right">
-              <a href="shop-shopping-cart.html" class="btn btn-default">View Cart</a>
-              <a href="shop-checkout.html" class="btn btn-primary">Checkout</a>
-            </div>
-          </div>
-        </div>            
-      </div>
-      <!--END CART -->
-
-      <!-- BEGIN NAVIGATION -->
-      <div class="header-navigation">
-        <ul>
-          <li class="dropdown dropdown-megamenu">
-            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-              Etiquetas
-              
-            </a>
-              
-            <!-- BEGIN DROPDOWN MENU -->
-            <ul class="dropdown-menu">
-              <li>
-                <div class="header-navigation-content">
-                  <div class="row">
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Para Balanças</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">60x30</a></li>
-                        <li><a href="shop-60x40.html">60x40</a></li>
-                        <li><a href="shop-product-list.html">60x60</a></li>
-                        <li><a href="shop-product-list.html">40x30</a></li>
-                        <li><a href="shop-product-list.html">40x40</a></li>
-                        <li><a href="shop-product-list.html">40x60</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Para Gôndolas</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">105x40</a></li>
-                        <li><a href="shop-product-list.html">108x30</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Para Código de Barras</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">33x22</a></li>
-                        <li><a href="shop-product-list.html">33x26</a></li>
-                      </ul>
-                      <div class="col-md-4 header-navigation-col">
-                        <h4>Precificadoras</h4>
-                        <ul>
-                          <li><a href="shop-product-list.html">MX</a></li>
-                        </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown dropdown-megamenu">
-            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-              Bobinas
-              
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <div class="header-navigation-content">
-                  <div class="row">
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Lisa</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">80x40</a></li>
-                        <li><a href="shop-product-list.html">80x80</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Personalizada</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">80x40</a></li>
-                        <li><a href="shop-product-list.html">80x80</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4 header-navigation-col">
-                      <h4>Accessories</h4>
-                      <ul>
-                        <li><a href="shop-product-list.html">Belts</a></li>
-                        <li><a href="shop-product-list.html">Caps</a></li>
-                        <li><a href="shop-product-list.html">Gloves, Hats and Scarves</a></li>
-                      </ul>
-
-                      
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li><a href="shop-product-list.html">Ribbons</a></li>
-          <li class="dropdown dropdown100 nav-catalogue">
-            
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
-              Contato 
-              
-            </a>
-              
-            <ul class="dropdown-menu">
-              <li class="active"><a href="shop-index.html">Home Default</a></li>
-              <li><a href="shop-index-header-fix.html">Home Header Fixed</a></li>
-              <li><a href="shop-index-light-footer.html">Home Light Footer</a></li>
-              <li><a href="shop-product-list.html">Product List</a></li>
-              <li><a href="shop-search-result.html">Search Result</a></li>
-              <li><a href="shop-item.html">Product Page</a></li>
-              <li><a href="shop-shopping-cart-null.html">Shopping Cart (Null Cart)</a></li>
-              <li><a href="shop-shopping-cart.html">Shopping Cart</a></li>
-              <li><a href="shop-checkout.html">Checkout</a></li>
-              <li><a href="shop-about.html">About</a></li>
-              <li><a href="shop-contacts.html">Contacts</a></li>
-              <li><a href="shop-account.html">My account</a></li>
-              <li><a href="shop-wishlist.html">My Wish List</a></li>
-              <li><a href="shop-goods-compare.html">Product Comparison</a></li>
-              <li><a href="shop-standart-forms.html">Standart Forms</a></li>
-              <li><a href="shop-faq.html">FAQ</a></li>
-              <li><a href="shop-privacy-policy.html">Privacy Policy</a></li>
-              <li><a href="shop-terms-conditions-page.html">Terms &amp; Conditions</a></li>
-            </ul>
-          </li>
-
-          <!-- BEGIN TOP SEARCH -->
-          <li class="menu-search">
-            <span class="sep"></span>
-            <i class="fa fa-search search-btn"></i>
-            <div class="search-box">
-              <form action="#">
-                <div class="input-group">
-                  <input type="text" placeholder="Search" class="form-control">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Procurar</button>
-                  </span>
-                </div>
-              </form>
-            </div> 
-          </li>
-          <!-- END TOP SEARCH -->
-        </ul>
-      </div>
-      <!-- END NAVIGATION -->
-    </div>
-  </div>
-  <!-- Header END -->
+    <?php 
+    include('header.php');
+    ?>
     
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="">Store</a></li>
+            <li><a href="shop-index.php">Início</a></li>
+            <li><a href="">Loja</a></li>
             <li class="active">My Account Page</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
@@ -372,8 +125,8 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-3">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Login/Register</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Restore Password</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Editar Informações</a></li>
+              <li class="list-group-item clearfix"><a href="change-password.php"><i class="fa fa-angle-right"></i> Mudar Senha</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> My account</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Address book</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wish list</a></li>
@@ -391,21 +144,12 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
             <div class="content-page">
               <h3>Olá, <?php if(isset($_SESSION['cli_nome'])){ echo $_SESSION['cli_nome'];} ?></h3>
               <ul>
-                <li><a href="javascript:;">Editar informações</a></li>
+                <li><a href="javascript:;">Ver pedidos</a></li>
                 <li><a href="change-password.php">Mudar senha</a></li>
                 <li><a href="javascript:;">Mudar endereços</a></li>
                 <li><a href="account.php?logout=1" id="logout-btn">Sair</a></li>
               </ul>
               <hr>
-
-              <h3>Meus Pedidos</h3>
-              <ul>
-                <li><a href="javascript:;">Ver histórico de pedidos</a></li>
-                <li><a href="javascript:;">Downloads</a></li>
-                <li><a href="javascript:;">Your Reward Points</a></li>
-                <li><a href="javascript:;">View your return requests</a></li>
-                <li><a href="javascript:;">Your Transactions</a></li>
-              </ul>
             </div>
           </div>
           <!-- END CONTENT -->
@@ -435,150 +179,9 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
     </div>
     <!-- END BRANDS -->
 
-    <!-- BEGIN STEPS -->
-    <div class="steps-block steps-block-red">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-truck"></i>
-            <div>
-              <h2>Free shipping</h2>
-              <em>Express delivery withing 3 days</em>
-            </div>
-            <span>&nbsp;</span>
-          </div>
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-gift"></i>
-            <div>
-              <h2>Daily Gifts</h2>
-              <em>3 Gifts daily for lucky customers</em>
-            </div>
-            <span>&nbsp;</span>
-          </div>
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-phone"></i>
-            <div>
-              <h2>477 505 8877</h2>
-              <em>24/7 customer care available</em>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END STEPS -->
-
-    <!-- BEGIN PRE-FOOTER -->
-    <div class="pre-footer">
-      <div class="container">
-        <div class="row">
-          <!-- BEGIN BOTTOM ABOUT BLOCK -->
-          <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2>About us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam sit nonummy nibh euismod tincidunt ut laoreet dolore magna aliquarm erat sit volutpat. Nostrud exerci tation ullamcorper suscipit lobortis nisl aliquip  commodo consequat. </p>
-            <p>Duis autem vel eum iriure dolor vulputate velit esse molestie at dolore.</p>
-          </div>
-          <!-- END BOTTOM ABOUT BLOCK -->
-          <!-- BEGIN BOTTOM INFO BLOCK -->
-          <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2>Information</h2>
-            <ul class="list-unstyled">
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Delivery Information</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Customer Service</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Order Tracking</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Shipping &amp; Returns</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Contact Us</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Careers</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Payment Methods</a></li>
-            </ul>
-          </div>
-          <!-- END INFO BLOCK -->
-
-          <!-- BEGIN TWITTER BLOCK --> 
-          <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2 class="margin-bottom-0">Latest Tweets</h2>
-            <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>      
-          </div>
-          <!-- END TWITTER BLOCK -->
-          
-          <!-- BEGIN BOTTOM CONTACTS -->
-          <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2>Our Contacts</h2>
-            <address class="margin-bottom-40">
-              35, Lorem Lis Street, Park Ave<br>
-              California, US<br>
-              Phone: 300 323 3456<br>
-              Fax: 300 323 1456<br>
-              Email: <a href="mailto:info@metronic.com">info@metronic.com</a><br>
-              Skype: <a href="skype:metronic">metronic</a>
-            </address>
-          </div>
-          <!-- END BOTTOM CONTACTS -->
-        </div>
-        <hr>
-        <div class="row">
-          <!-- BEGIN SOCIAL ICONS -->
-          <div class="col-md-6 col-sm-6">
-            <ul class="social-icons">
-              <li><a class="rss" data-original-title="rss" href="javascript:;"></a></li>
-              <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
-              <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
-              <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
-              <li><a class="linkedin" data-original-title="linkedin" href="javascript:;"></a></li>
-              <li><a class="youtube" data-original-title="youtube" href="javascript:;"></a></li>
-              <li><a class="vimeo" data-original-title="vimeo" href="javascript:;"></a></li>
-              <li><a class="skype" data-original-title="skype" href="javascript:;"></a></li>
-            </ul>
-          </div>
-          <!-- END SOCIAL ICONS -->
-          <!-- BEGIN NEWLETTER -->
-          <div class="col-md-6 col-sm-6">
-            <div class="pre-footer-subscribe-box pull-right">
-              <h2>Newsletter</h2>
-              <form action="#">
-                <div class="input-group">
-                  <input type="text" placeholder="youremail@mail.com" class="form-control">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Subscribe</button>
-                  </span>
-                </div>
-              </form>
-            </div> 
-          </div>
-          <!-- END NEWLETTER -->
-        </div>
-      </div>
-    </div>
-    <!-- END PRE-FOOTER -->
-
-    <!-- BEGIN FOOTER -->
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <!-- BEGIN COPYRIGHT -->
-          <div class="col-md-4 col-sm-4 padding-top-10">
-            2015 © Keenthemes. ALL Rights Reserved. 
-          </div>
-          <!-- END COPYRIGHT -->
-          <!-- BEGIN PAYMENTS -->
-          <div class="col-md-4 col-sm-4">
-            <ul class="list-unstyled list-inline pull-right">
-              <li><img src="assets/corporate/img/payments/western-union.jpg" alt="We accept Western Union" title="We accept Western Union"></li>
-              <li><img src="assets/corporate/img/payments/american-express.jpg" alt="We accept American Express" title="We accept American Express"></li>
-              <li><img src="assets/corporate/img/payments/MasterCard.jpg" alt="We accept MasterCard" title="We accept MasterCard"></li>
-              <li><img src="assets/corporate/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
-              <li><img src="assets/corporate/img/payments/visa.jpg" alt="We accept Visa" title="We accept Visa"></li>
-            </ul>
-          </div>
-          <!-- END PAYMENTS -->
-          <!-- BEGIN POWERED -->
-          <div class="col-md-4 col-sm-4 text-right">
-            <p class="powered">Powered by: <a href="http://www.keenthemes.com/">KeenThemes.com</a></p>
-          </div>
-          <!-- END POWERED -->
-        </div>
-      </div>
-    </div>
-    <!-- END FOOTER -->
+    <?php 
+    include('footer.php');
+    ?>
 
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <!-- BEGIN CORE PLUGINS(REQUIRED FOR ALL PAGES) -->

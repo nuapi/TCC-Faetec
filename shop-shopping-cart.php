@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 if(isset($_POST['add_to_cart'])){
   //se usuario ja adicionou produto ao carrinho
@@ -81,7 +83,7 @@ if(isset($_POST['add_to_cart'])){
 
 }
 else{
-  header('location: shop-index.php');
+  //header('location: shop-index.php');
 }
 
 
@@ -134,7 +136,7 @@ include('header.php');
                   <tr>
                   <td class="goods-page-image">
                     <a href="javascript:;">
-                      <img src="assets/pages/img/prodcrispel/<?php echo $value['prod_imagem'];?>" 
+                      <img src="./assets/prodG/<?php echo $value['prod_imagem'];?>" 
                           alt="<?php echo $value['prod_nome'];?>"
                           style="width: 100px; height: 100px; object-fit: cover;"
                           class="img-thumbnail">
@@ -211,7 +213,7 @@ include('header.php');
               <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
-                    <img src="./assets/prodcrispel/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                  <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
                       <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>

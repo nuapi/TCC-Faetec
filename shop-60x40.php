@@ -27,7 +27,7 @@ include('header.php');
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="index.html">Início</a></li>
+            <li><a href="shop-index.php">Início</a></li>
             <li><a href="">Etiquetas</a></li>
             <li class="active">Etiqueta 60x40</li>
         </ul>
@@ -136,12 +136,16 @@ include('header.php');
               <?php while($row = $products->fetch_assoc()) { ?>
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src="./assets/pages/img/prodcrispel/<?php echo $row['prod_imagem'];?>" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="./assets/pages/img/prodcrispel/<?php echo $row['prod_imagem'];?>">
+                  <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"
+                    alt="Produto" 
+                    class="img-responsive" 
+                    style="width: 300px; height: auto;"
+                    data-BigImgsrc="./assets/prodG/<?php echo $row['prod_imagem2'];?>">
                   </div>
                   <div class="product-other-images">
-                    <a href="assets/pages/img/products/model3.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="assets/pages/img/products/model3.jpg"></a>
-                    <a href="assets/pages/img/products/model4.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="assets/pages/img/products/model4.jpg"></a>
-                    <a href="assets/pages/img/products/model5.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="assets/pages/img/products/model5.jpg"></a>
+                    <a href="assets/pages/img/products/model3.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
+                    <a href="assets/pages/img/products/model4.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
+                    <a href="assets/pages/img/products/model5.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
@@ -161,24 +165,22 @@ include('header.php');
                     <div class="pull-left">
                       <label class="control-label">Quantidade:</label>
                       <select class="form-control input-sm" name="prod_quant" id="prod_quant">
-                        <option value="100">100</option>
-                        <option value="150">150</option>
-                        <option value="200">200</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                       </select>
                     </div>
                     <div class="pull-left">
-                      <label class="control-label">Color:</label>
+                      <label class="control-label">Cor:</label>
                       <select class="form-control input-sm">
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
+                        <option>Branca</option>
                       </select>
                     </div>
                   </div>
                   <div class="product-page-cart">
                     <form method="POST" action="shop-shopping-cart.php">
                       <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
-                      <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
+                      <input type="hidden" name="prod_imagem2" value="<?php echo $row['prod_imagem2'];?>"/>
                       <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
                       <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
                       <button class="btn btn-primary" type="submit" name="add_to_cart">Carrinho</button>
@@ -193,37 +195,45 @@ include('header.php');
 
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
-                    <li><a href="#Description" data-toggle="tab" class="active">Description</a></li>
-                    <li><a href="#Information" data-toggle="tab">Information</a></li>
+                    <li class="active"><a href="#Description" data-toggle="tab">Descrição</a></li>
+                    <li><a href="#Information" data-toggle="tab">Informação</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade" id="Description">
-                      <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. </p>
+                    <div class="tab-pane fade active in" id="Description">
+                      <p><?php echo $row['prod_desc'];?> </p>
                     </div>
                     <div class="tab-pane fade" id="Information">
                       <table class="datasheet">
                         <tr>
-                          <th colspan="2">Additional features</th>
+                          <th colspan="2">Características</th>
                         </tr>
                         <tr>
-                          <td class="datasheet-features-type">Value 1</td>
-                          <td>21 cm</td>
+                          <td class="datasheet-features-type">Marca</td>
+                          <td>Crispel - Toledo Prix</td>
                         </tr>
                         <tr>
-                          <td class="datasheet-features-type">Value 2</td>
-                          <td>700 gr.</td>
+                          <td class="datasheet-features-type">Tamanho do papel</td>
+                          <td>40X40 Térmica</td>
                         </tr>
                         <tr>
-                          <td class="datasheet-features-type">Value 3</td>
-                          <td>10 person</td>
+                          <td class="datasheet-features-type">Tipo de papel</td>
+                          <td>Térmico Direito</td>
                         </tr>
                         <tr>
-                          <td class="datasheet-features-type">Value 4</td>
-                          <td>14 cm</td>
+                          <td class="datasheet-features-type">Cor</td>
+                          <td>Branco</td>
                         </tr>
                         <tr>
-                          <td class="datasheet-features-type">Value 5</td>
-                          <td>plastic</td>
+                          <td class="datasheet-features-type">Quantidade de folhas</td>
+                          <td>6000</td>
+                        </tr>
+                        <tr>
+                          <td class="datasheet-features-type">Gramagem</td>
+                          <td>75g</td>
+                        </tr>
+                        <tr>
+                          <td class="datasheet-features-type">Formato de venda</td>
+                          <td>Unidade</td>
                         </tr>
                       </table>
                     </div>
