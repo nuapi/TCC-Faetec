@@ -193,7 +193,7 @@ include('header.php');
                 </ul>
               </div>
               </div>
-              <a href="shop-product-list.php"><button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button></a>
+              <a href="shop-product-list.php"><button class="btn btn-default" type="submit">Continuar comprando <i class="fa fa-shopping-cart"></i></button></a>
               <form method="POST" action="shop-checkout.php">
               <input class="btn btn-primary" type="submit" value="Checkout" name="checkout"><i class="fa fa-check"></i>
               </form>
