@@ -1,11 +1,4 @@
 <?php include('header.php')?>
-
-<?php
-if(!isset($_SESSION['admin_logged_in'])){
-    header('location: login.php');
-    exit;
-}
-?>
 <?php
                 //1. numero da pagina
                 if(isset($_GET['page_no']) && $_GET['page_no'] != ""){

@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php 
+// Iniciar sessão se ainda não estiver ativa
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
 
 <?php include('../connection.php'); ?>
 
