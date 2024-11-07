@@ -157,7 +157,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
             <li><a href="shop-product-list-bobina.php">Bobinas</a></li>
                 
             <li><a href="shop-product-list.php">Ribbons</a></li>
-            <li><a href="javascript:;">Contato </a></li>
+            <li><a href="shop-contacts.php">Contato </a></li>
 
             <!-- BEGIN TOP SEARCH -->
             <li class="menu-search">
