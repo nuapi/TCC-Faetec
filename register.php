@@ -163,11 +163,9 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                 <!-- BEGIN TOP BAR MENU -->
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><a href="shop-account.html">Minha Conta</a></li>
-                        <li><a href="shop-wishlist.html">Lista de Desejos</a></li>
-                        <li><a href="shop-checkout.html">Checkout</a></li>
-                        <li><a href="page-login.html">Log In</a></li>
-                        <li><a href="./admin/login.html">Admin</a></li>
+                        <li><a href="shop-account.php">Minha Conta</a></li>
+                        <li><a href="shop-checkout.php">Checkout</a></li>
+                        <li><a href="login.php">Log In</a></li>
                     </ul>
                 </div>
                 <!-- END TOP BAR MENU -->
@@ -179,7 +177,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
     <!-- BEGIN HEADER -->
     <div class="header">
       <div class="container">
-        <a class="site-logo" href="shop-index.html"><img src="./assets/logocrispel/crispel (1) (1) (1).png" alt="Metronic Shop UI"></a>          
+        <a class="site-logo" href="shop-index.php"><img src="./assets/logocrispel/crispel (1) (1) (1).png" alt="Metronic Shop UI"></a>          
         </div>
       
     <!--Registrar-->
