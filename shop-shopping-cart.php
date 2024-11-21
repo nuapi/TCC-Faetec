@@ -26,9 +26,8 @@ if(isset($_POST['add_to_cart'])){
 
       //produto ja adicionado
     }else{
-
-      //echo '<script>alert("Produto já está no carrinho");</script>';
-      //echo '<script>window.location="index.php";</script>';
+      // Produto já está no carrinho, não faz nada
+      // Opcional: pode adicionar uma mensagem de aviso se quiser
     }
 
     //produto novo no carrinho
@@ -37,7 +36,7 @@ if(isset($_POST['add_to_cart'])){
     $prod_nome = $_POST['prod_nome'];
     $prod_preco = $_POST['prod_preco'];
     $prod_imagem = $_POST['prod_imagem'];
-    $prod_quant = $POST['prod_quant'];
+    $prod_quant = $_POST['prod_quant'];
 
     $prod_array = array(
       'idproduto' => $idproduto,
@@ -52,8 +51,6 @@ if(isset($_POST['add_to_cart'])){
 
   //calcular total
   calculateTotalCart();
-
-
 
 //remover do carrinho
 }else if(isset($_POST['remove_product'])){
@@ -83,7 +80,7 @@ if(isset($_POST['add_to_cart'])){
 
 }
 else{
-  //header('location: shop-index.php');
+  // Não redireciona automaticamente
 }
 
 

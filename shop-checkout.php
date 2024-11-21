@@ -38,9 +38,7 @@ class CheckoutHandler {
     // Salvar endereço de entrega
     public function saveShippingAddress($data) {
         try {
-            if ($this->cliente === null) {
-                throw new Exception("Usuário não autenticado");
-            }
+            // Removida verificação de cliente autenticado
 
             if (isset($data['endprincipal']) && $data['endprincipal'] === 'S') {
                 $updateStmt = $this->db->prepare("
@@ -67,7 +65,7 @@ class CheckoutHandler {
                 $data['endprincipal'] ?? 'N',
                 $data['cidade'],
                 $data['estado'],
-                $_SESSION['idcliente']
+                $_SESSION['idcliente'] ?? 0 // Permitir 0 se não houver cliente
             ]);
             
             return $this->db->lastInsertId();
@@ -79,11 +77,6 @@ class CheckoutHandler {
     
     // Criar pedido
     public function createOrder($endereco_id, $cartItems) {
-        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-            error_log("Tentativa de criar pedido sem cliente autenticado");
-            return false;
-        }
-
         if (empty($cartItems)) {
             error_log("Tentativa de criar pedido com carrinho vazio");
             return false;
@@ -101,7 +94,7 @@ class CheckoutHandler {
             $totalAmount = $this->calculateTotal($cartItems);
             $stmt->execute([
                 $totalAmount, 
-                $_SESSION['idcliente'],
+                $_SESSION['idcliente'] ?? 0, // Permitir 0 se não houver cliente
                 $endereco_id
             ]);
             $pedido_id = $this->db->lastInsertId();
@@ -118,7 +111,7 @@ class CheckoutHandler {
                     $item['prod_preco'],
                     $pedido_id,
                     $item['idproduto'],
-                    $_SESSION['idcliente'],
+                    $_SESSION['idcliente'] ?? 0, // Permitir 0 se não houver cliente
                     $item['administrador_idadm']
                 ]);
             }
@@ -144,11 +137,6 @@ class CheckoutHandler {
     
     // Processar pagamento
     public function processPayment($pedido_id, $paymentMethod) {
-        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-            error_log("Tentativa de processar pagamento sem cliente autenticado");
-            return false;
-        }
-
         try {
             $stmt = $this->db->prepare("
                 INSERT INTO formadepagamento 
@@ -170,15 +158,12 @@ class CheckoutHandler {
 // Processar formulário de checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pedido_id = null; // Inicializa a variável para o ID do pedido
-    try {
-        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-            throw new Exception("Usuário não autenticado");
-        }
+    $redirect_to_success = false; // Flag para controlar redirecionamento
 
+    try {
         if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
             $_SESSION['checkout_error'] = "Seu carrinho está vazio";
-            header('Location: carrinho.php');
-            exit;
+            $redirect_to_success = true; // Permite redirecionar mesmo com carrinho vazio
         }
 
         $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
@@ -206,17 +191,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             unset($_SESSION['cart']);
+            $redirect_to_success = true; // Permite redirecionar com sucesso
         } else {
             $_SESSION['checkout_errors'] = $errors;
+            $redirect_to_success = true; // Permite redirecionar mesmo com erros
         }
     } catch (Exception $e) {
         error_log("Erro no checkout: " . $e->getMessage());
         $_SESSION['checkout_error'] = "Erro no processamento: " . $e->getMessage();
-    } finally {
-        // Redirecionar para a página de sucesso, independentemente de erros
-        header('Location: checkout-sucesso.php?pedido_id=' . ($pedido_id ?? '0'));
-        exit;
+        $redirect_to_success = true; // Permite redirecionar mesmo com exceção
     }
+
+    // Redireciona para checkout-sucesso.php
+    header('Location: checkout-sucesso.php');
+    exit(); // Importante para garantir que o script pare após o redirecionamento
 }
 ?>
 
@@ -361,14 +349,6 @@ include('header.php');
         <?php endif; ?>
 
         <?php 
-        // Verificar se o usuário está logado
-        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']): ?>
-            <div class="error-message">
-                Por favor, <a href="login.php">faça login</a> para continuar o checkout.
-            </div>
-        <?php exit(); endif; ?>
-
-        <?php 
         // Verificar se o carrinho não está vazio
         if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])): ?>
             <div class="error-message">
@@ -411,7 +391,7 @@ include('header.php');
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cidade">Cidade *</label>
-                            <input type="text" id=" cidade" name="cidade" required>
+                            <input type="text" id="cidade" name="cidade" required>
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado *</label>

@@ -4,49 +4,72 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar se há um ID de pedido na URL
-if (!isset($_GET['pedido_id'])) {
-    header('Location: index.php');
-    exit;
+// Conexão com o banco de dados
+$db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Função para buscar detalhes do último pedido
+function getLastOrderDetails($db) {
+    try {
+        // Busca o último pedido do cliente
+        $stmt = $db->prepare("
+            SELECT 
+                p.idpedido, 
+                p.data, 
+                p.valorliqbruto, 
+                p.statuspedido,
+                e.rua, 
+                e.num, 
+                e.bairro, 
+                e.cidade, 
+                e.estado, 
+                e.cep,
+                fp.metodo AS metodo_pagamento
+            FROM pedido p
+            LEFT JOIN endereco e ON p.endereco_identrega = e.idendereco
+            LEFT JOIN formadepagamento fp ON p.idpedido = fp.pedido_idpedido
+            WHERE p.cliente_idcliente = ?
+            ORDER BY p.idpedido DESC
+            LIMIT 1
+        ");
+        $stmt->execute([$_SESSION['idcliente']]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log("Erro ao buscar detalhes do pedido: " . $e->getMessage());
+        return null;
+    }
 }
 
-$pedido_id = $_GET['pedido_id'];
-
-try {
-    // Conectar ao banco de dados
-    $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Buscar detalhes do pedido
-    $stmt = $db->prepare("
-        SELECT p.idpedido, p.data, p.valorliqbruto, 
-               c.nome AS cliente_nome, 
-               f.metodo AS metodo_pagamento
-        FROM pedido p
-        JOIN cliente c ON p.cliente_idcliente = c.idcliente
-        JOIN formadepagamento f ON p.idpedido = f.pedido_idpedido
-        WHERE p.idpedido = ?
-    ");
-    $stmt->execute([$pedido_id]);
-    $pedido = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Buscar itens do pedido
-    $stmt = $db->prepare("
-        SELECT pr.nome, ip.qnt, ip.precounitario
-        FROM itempedido ip
-        JOIN produto pr ON ip.produto_idproduto = pr.idproduto
-        WHERE ip.pedido_idpedido = ?
-    ");
-    $stmt->execute([$pedido_id]);
-    $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    error_log($e->getMessage());
-    header('Location: index.php');
-    exit;
+// Buscar itens do pedido
+function getOrderItems($db, $pedido_id) {
+    try {
+        $stmt = $db->prepare("
+            SELECT 
+                ip.qnt, 
+                ip.precounitario, 
+                p.prod_nome
+            FROM itempedido ip
+            JOIN produto p ON ip.produto_idproduto = p.idproduto
+            WHERE ip.pedido_idpedido = ?
+        ");
+        $stmt->execute([$pedido_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log("Erro ao buscar itens do pedido: " . $e->getMessage());
+        return [];
+    }
 }
 
-include('header.php');
+// Buscar detalhes do último pedido
+$order = getLastOrderDetails($db);
+$orderItems = $order ? getOrderItems($db, $order['idpedido']) : [];
+
+// Métodos de pagamento traduzidos
+$payment_methods = [
+    'pix' => 'PIX',
+    'cartao' => 'Cartão de Crédito',
+    'boleto' => 'Boleto Bancário'
+];
 ?>
 
 <!DOCTYPE html>
@@ -54,17 +77,27 @@ include('header.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Finalizado</title>
+    <title>Pedido Confirmado</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="./assets/pages/css/style2.css" rel="stylesheet">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
         .success-container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 30px;
-            background-color: #f9f9f9;
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
             text-align: center;
         }
 
@@ -74,110 +107,75 @@ include('header.php');
             margin-bottom: 20px;
         }
 
-        .success-message {
-            margin-bottom: 30px;
-        }
-
         .order-details {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
             text-align: left;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
         }
 
-        .order-details h3 {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+        .order-items {
+            margin-top: 15px;
         }
 
         .order-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
-        .total-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-top: 1px solid #ddd;
-        }
-
-        .btn-continue {
-            display: inline-block;
+        .btn-primary {
             background-color: #ff0000;
             color: white;
-            padding: 12px 24px;
-            text-decoration: none;
+            border: none;
+            padding: 10px 20px;
             border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
             margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-continue:hover {
-            background-color: #cc0000;
         }
     </style>
 </head>
 <body>
     <div class="success-container">
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
-        </div>
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1>Pedido Confirmado!</h1>
+        <p>Agradecemos pela sua compra. Seu pedido foi processado com sucesso.</p>
 
-        <div class="success-message">
-            <h1>Pedido Concluído com Sucesso!</h1>
-            <p>Obrigado por comprar conosco, <?php echo htmlspecialchars($pedido['cliente_nome']); ?>.</p>
-            <p>Seu pedido #<?php echo $pedido_id; ?> foi processado e está sendo preparado.</p>
-        </div>
+        <?php if ($order): ?>
+            <div class="order-details">
+                <h2>Detalhes do Pedido</h2>
+                <p><strong>Número do Pedido:</strong> #<?php echo $order['idpedido']; ?></p>
+                <p><strong>Data:</strong> <?php echo date('d/m/Y', strtotime($order['data'])); ?></p>
+                <p><strong>Status:</strong> <?php echo $order['statuspedido']; ?></p>
+                <p><strong>Método de Pagamento:</strong> <?php echo $payment_methods[$order['metodo_pagamento']] ?? $order['metodo_pagamento']; ?></p>
+                <p><strong>Valor Total:</strong> R$ <?php echo number_format($order['valorliqbruto'], 2, ',', '.'); ?></p>
 
-        <div class="order-details">
-            <h3>Detalhes do Pedido</h3>
-            
-            <div class="order-items">
-                <?php foreach ($itens as $item): ?>
-                    <div class="order-item">
-                        <span><?php echo htmlspecialchars($item['nome']); ?> (<?php echo $item['qnt']; ?>x)</span>
-                        <span>R$ <?php echo number_format($item['precounitario'] * $item['qnt'], 2, ',', '.'); ?></span>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="total-line subtotal">
-                <span>Subtotal:</span>
-                <span>R$ <?php 
-                    $subtotal = $pedido['valorliqbruto'] - 50.00; // Subtraindo o frete
-                    echo number_format($subtotal, 2, ',', '.');
-                ?></span>
-            </div>
-
-            <div class="total-line frete">
-                <span>Frete:</span>
-                <span>R$ 50,00</span>
-            </div>
-
-            <div class="total-line total">
-                <strong>Total:</strong>
-                <strong>R$ <?php echo number_format($pedido['valorliqbruto'], 2, ',', '.'); ?></strong>
-            </div>
-
-            <div class="payment-method">
-                <p><strong>Método de Pagamento:</strong> 
-                    <?php 
-                    $metodos = [
-                        'pix' => 'PIX',
-                        'cartao' => 'Cartão de Crédito',
-                        'boleto' => 'Boleto Bancário'
-                    ];
-                    echo $metodos[$pedido['metodo_pagamento']] ?? $pedido['metodo_pagamento']; 
-                    ?>
+                <h3>Endereço de Entrega</h3>
+                <p>
+                    <?php echo $order['rua'] . ', ' . $order['num'] . ' - ' . $order['bairro'] . '<br>' . 
+                               $order['cidade'] . ' - ' . $order['estado'] . '<br>' . 
+                               'CEP: ' . $order['cep']; ?>
                 </p>
-            </div>
-        </div>
 
-        <a href="index.php" class="btn-continue">Continuar Comprando</a>
+                <h3>Itens do Pedido</h3>
+                <div class="order-items">
+                    <?php foreach ($orderItems as $item): ?>
+                        <div class="order-item">
+                            <span><?php echo $item['prod_nome']; ?></span>
+                            <span><?php echo $item['qnt'] . 'x R$ ' . number_format($item['precounitario'], 2, ',', '.'); ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php else: ?>
+            <p>Não foi possível recuperar os detalhes do pedido.</p>
+        <?php endif; ?>
+
+        <a href="shop-product-list.php" class="btn-primary">Continuar Comprando</a>
     </div>
 </body>
 </html>
