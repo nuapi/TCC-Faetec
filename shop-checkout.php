@@ -11,7 +11,7 @@ class CheckoutHandler {
     
     public function __construct($db) {
         $this->db = $db;
-        $this->cliente = isset($_SESSION['cliente']) ? $_SESSION['cliente'] : null;
+        $this->cliente = isset($_SESSION['idcliente']) ? ['idcliente' => $_SESSION['idcliente']] : null;
     }
     
     // Validar dados do formulário
@@ -19,12 +19,17 @@ class CheckoutHandler {
         $errors = [];
         
         // Validar campos obrigatórios do endereço
-        $required_fields = ['rua', 'num', 'bairro', 'cep', 'cidade', 'estado'];
+        $required_fields = ['rua', 'num', 'bairro', 'cep', 'cidade', 'estado', 'pontoreferencia'];
         
         foreach ($required_fields as $field) {
             if (empty($data[$field])) {
                 $errors[] = ucfirst($field) . " é obrigatório";
             }
+        }
+        
+        // Validar método de pagamento
+        if (empty($data['metodo_pagamento'])) {
+            $errors[] = "Método de pagamento é obrigatório";
         }
         
         return $errors;
@@ -33,6 +38,19 @@ class CheckoutHandler {
     // Salvar endereço de entrega
     public function saveShippingAddress($data) {
         try {
+            if ($this->cliente === null) {
+                throw new Exception("Usuário não autenticado");
+            }
+
+            if (isset($data['endprincipal']) && $data['endprincipal'] === 'S') {
+                $updateStmt = $this->db->prepare("
+                    UPDATE endereco 
+                    SET endprincipal = 'N' 
+                    WHERE cliente_idcliente = ?
+                ");
+                $updateStmt->execute([$_SESSION['idcliente']]);
+            }
+
             $stmt = $this->db->prepare("
                 INSERT INTO endereco 
                 (rua, num, bairro, cep, complemento, pontoreferencia, endprincipal, cidade, estado, cliente_idcliente) 
@@ -49,33 +67,45 @@ class CheckoutHandler {
                 $data['endprincipal'] ?? 'N',
                 $data['cidade'],
                 $data['estado'],
-                $this->cliente['idcliente']
+                $_SESSION['idcliente']
             ]);
             
             return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
+        } catch (Exception $e) {
+            error_log("Erro ao salvar endereço: " . $e->getMessage());
             return false;
         }
     }
     
     // Criar pedido
     public function createOrder($endereco_id, $cartItems) {
+        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+            error_log("Tentativa de criar pedido sem cliente autenticado");
+            return false;
+        }
+
+        if (empty($cartItems)) {
+            error_log("Tentativa de criar pedido com carrinho vazio");
+            return false;
+        }
+
         try {
             $this->db->beginTransaction();
             
-            // Inserir pedido
             $stmt = $this->db->prepare("
                 INSERT INTO pedido 
-                (data, statuspedido, valorliqbruto, cliente_idcliente) 
-                VALUES (CURDATE(), 'Pendente', ?, ?)
+                (data, statuspedido, valorliqbruto, cliente_idcliente, datacancelamento, reembolso, endereco_identrega) 
+                VALUES (CURDATE(), 'Pendente', ?, ?, '0000-00-00', 0, ?)
             ");
             
             $totalAmount = $this->calculateTotal($cartItems);
-            $stmt->execute([$totalAmount, $this->cliente['idcliente']]);
+            $stmt->execute([
+                $totalAmount, 
+                $_SESSION['idcliente'],
+                $endereco_id
+            ]);
             $pedido_id = $this->db->lastInsertId();
             
-            // Inserir itens do pedido
             $stmt = $this->db->prepare("
                 INSERT INTO itempedido 
                 (qnt, precounitario, pedido_idpedido, produto_idproduto, pedido_idcliente, produto_idadm) 
@@ -84,12 +114,12 @@ class CheckoutHandler {
             
             foreach ($cartItems as $item) {
                 $stmt->execute([
-                    $item['quantidade'],
-                    $item['preco'],
+                    $item['prod_quant'],
+                    $item['prod_preco'],
                     $pedido_id,
                     $item['idproduto'],
-                    $this->cliente['idcliente'],
-                    $item['idadm']
+                    $_SESSION['idcliente'],
+                    $item['administrador_idadm']
                 ]);
             }
             
@@ -97,23 +127,28 @@ class CheckoutHandler {
             return $pedido_id;
         } catch (PDOException $e) {
             $this->db->rollBack();
-            error_log($e->getMessage());
+            error_log("Erro ao criar pedido: " . $e->getMessage());
             return false;
         }
     }
     
     // Calcular total do pedido
     private function calculateTotal($cartItems) {
-      $total = 0;
-      foreach ($cartItems as $item) {
-          $total += $item['prod_preco'] * $item['prod_quant'];
-      }
-      $frete = 50.00; // Valor fixo do frete
-      return $total + $frete;
-  }
+        $total = 0;
+        foreach ($cartItems as $item) {
+            $total += $item['prod_preco'] * $item['prod_quant'];
+        }
+        $frete = 50.00; // Valor fixo do frete
+        return $total + $frete;
+    }
     
     // Processar pagamento
     public function processPayment($pedido_id, $paymentMethod) {
+        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+            error_log("Tentativa de processar pagamento sem cliente autenticado");
+            return false;
+        }
+
         try {
             $stmt = $this->db->prepare("
                 INSERT INTO formadepagamento 
@@ -126,7 +161,7 @@ class CheckoutHandler {
             $stmt->execute([$paymentMethod, $pedido_id]);
             return true;
         } catch (PDOException $e) {
-            error_log($e->getMessage());
+            error_log("Erro ao processar pagamento: " . $e->getMessage());
             return false;
         }
     }
@@ -134,51 +169,59 @@ class CheckoutHandler {
 
 // Processar formulário de checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $pedido_id = null; // Inicializa a variável para o ID do pedido
     try {
+        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+            throw new Exception("Usuário não autenticado");
+        }
+
+        if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+            $_SESSION['checkout_error'] = "Seu carrinho está vazio";
+            header('Location: carrinho.php');
+            exit;
+        }
+
         $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         $checkout = new CheckoutHandler($db);
         
-        // Validar dados
         $errors = $checkout->validateFormData($_POST);
         
         if (empty($errors)) {
-            // Salvar endereço
             $endereco_id = $checkout->saveShippingAddress($_POST);
             
-            if ($endereco_id) {
-                // Criar pedido
-                $pedido_id = $checkout->createOrder($endereco_id, $_SESSION['cart']);
-                
-                if ($pedido_id) {
-                    // Processar pagamento
-                    if ($checkout->processPayment($pedido_id, $_POST['metodo_pagamento'])) {
-                        // Limpar carrinho
-                        unset($_SESSION['cart']);
-                        
-                        // Redirecionar para página de sucesso
-                        header('Location: checkout-sucesso.php?pedido_id=' . $pedido_id);
-                        exit;
-                    }
-                }
+            if ($endereco_id === false) {
+                throw new Exception("Erro ao salvar endereço");
             }
+
+            $pedido_id = $checkout->createOrder($endereco_id, $_SESSION['cart']);
             
-            // Se chegou aqui, houve erro no processamento
-            $_SESSION['checkout_error'] = "Erro ao processar seu pedido. Por favor, tente novamente.";
+            if ($pedido_id === false) {
+                throw new Exception("Erro ao criar pedido");
+            }
+
+            if (!$checkout->processPayment($pedido_id, $_POST['metodo_pagamento'])) {
+                throw new Exception("Erro ao processar pagamento");
+            }
+
+            unset($_SESSION['cart']);
         } else {
             $_SESSION['checkout_errors'] = $errors;
         }
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        $_SESSION['checkout_error'] = "Erro de conexão com o banco de dados.";
+    } catch (Exception $e) {
+        error_log("Erro no checkout: " . $e->getMessage());
+        $_SESSION['checkout_error'] = "Erro no processamento: " . $e->getMessage();
+    } finally {
+        // Redirecionar para a página de sucesso, independentemente de erros
+        header('Location: checkout-sucesso.php?pedido_id=' . ($pedido_id ?? '0'));
+        exit;
     }
 }
 ?>
 
 <?php 
 include('header.php');
-
 ?>
 
 <!DOCTYPE html>
@@ -216,7 +259,7 @@ include('header.php');
         .form-group select {
             width: 100%;
             padding: 8px;
-            border: 1px solid #ddd;
+            border:  1px solid #ddd;
             border-radius: 4px;
         }
 
@@ -295,6 +338,17 @@ include('header.php');
 </head>
 <body>
     <div class="checkout-container">
+        <?php 
+        // Exibir erros de checkout
+        if (isset($_SESSION['checkout_error'])): ?>
+            <div class="error-message">
+                <?php 
+                echo htmlspecialchars($_SESSION['checkout_error']); 
+                unset($_SESSION['checkout_error']);
+                ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (isset($_SESSION['checkout_errors'])): ?>
             <div class="error-message">
                 <?php 
@@ -306,28 +360,23 @@ include('header.php');
             </div>
         <?php endif; ?>
 
-        
-        <style>
-        .checkbox-group {
-            margin: 20px 0;
-        }
+        <?php 
+        // Verificar se o usuário está logado
+        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']): ?>
+            <div class="error-message">
+                Por favor, <a href="login.php">faça login</a> para continuar o checkout.
+            </div>
+        <?php exit(); endif; ?>
 
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
+        <?php 
+        // Verificar se o carrinho não está vazio
+        if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])): ?>
+            <div class="error-message">
+                Seu carrinho está vazio. <a href="shop-product-list.php">Continue comprando</a>
+            </div>
+        <?php exit(); endif; ?>
 
-        .checkbox-label input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .checkbox-label span {
-            font-weight: normal;
-        }
-        </style>
-        <form method="POST" action="checkout.php">
+        <form method="POST" action="shop-checkout.php">
             <div class="checkout-grid">
                 <div class="shipping-form">
                     <h2>Endereço de Entrega</h2>
@@ -362,7 +411,7 @@ include('header.php');
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cidade">Cidade *</label>
-                            <input type="text" id="cidade" name="cidade" required>
+                            <input type="text" id=" cidade" name="cidade" required>
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado *</label>
@@ -400,8 +449,8 @@ include('header.php');
                     </div>
 
                     <div class="form-group">
-                        <label for="pontoreferencia">Ponto de Referência</label>
-                        <input type="text" id="pontoreferencia" name="pontoreferencia">
+                        <label for="pontoreferencia">Ponto de Referência *</label>
+                        <input type="text" id="pontoreferencia" name="pontoreferencia" required>
                     </div>
 
                     <div class="form-group checkbox-group">
@@ -490,7 +539,7 @@ include('header.php');
 
         // Validação do formulário
         document.querySelector('form').addEventListener('submit', function(e) {
-            const requiredFields = ['rua', 'num', 'bairro', 'cep', 'cidade', 'estado'];
+            const requiredFields = ['rua', 'num', 'bairro', 'cep', 'cidade', 'estado', 'pontoreferencia'];
             let hasError = false;
 
             requiredFields.forEach(field => {
