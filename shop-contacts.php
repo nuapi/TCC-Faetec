@@ -6,7 +6,7 @@ include('header.php');
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="shop-index.php">Home</a></li>
+            <li><a href="shop-index.php">Início</a></li>
             <li class="active"><a href="shop-contacts.php">Contato</a></li>
         </ul>
         
@@ -16,12 +16,10 @@ include('header.php');
           <div class="sidebar col-md-3 col-sm-3">
             <ul class="list-group margin-bottom-25 sidebar-menu">
               <li class="list-group-item clearfix"><a href="login.php"><i class="fa fa-angle-right"></i> Login/Registrar</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Restore Password</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> My account</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Address book</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wish list</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Returns</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Newsletter</a></li>
+              <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Nossos Produtos</a></li>
+              <li class="list-group-item clearfix"><a href="account.php"><i class="fa fa-angle-right"></i> Minha Conta</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wishlist</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Notícias</a></li>
             </ul>
 
             <h2>Nossos Contatos</h2>

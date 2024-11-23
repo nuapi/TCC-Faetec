@@ -77,14 +77,14 @@ include('header.php');
             </ul>
 
             <div class="sidebar-filter margin-bottom-25">
-              <h2>Filter</h2>
-              <h3>Availability</h3>
+              <h2>Filtrar</h2>
+              <h3>Disponibilidade</h3>
               <div class="checkbox-list">
-                <label><input type="checkbox"> Not Available (3)</label>
-                <label><input type="checkbox"> In Stock (26)</label>
+                <label><input type="checkbox"> Indisponível (3)</label>
+                <label><input type="checkbox"> Em Estoque (26)</label>
               </div>
 
-              <h3>Price</h3>
+              <h3>Preço</h3>
               <p>
                 <label for="amount">Range:</label>
                 <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">

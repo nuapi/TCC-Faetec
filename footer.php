@@ -1,34 +1,4 @@
-    <!-- BEGIN STEPS -->
-    <div class="steps-block steps-block-red">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-truck"></i>
-            <div>
-              <h2>Frete fixo</h2>
-              <em>50 reais para todas as regiões</em>
-            </div>
-            <span>&nbsp;</span>
-          </div>
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-gift"></i>
-            <div>
-              <h2>Brindes</h2>
-              <em>Enviados com suas compras</em>
-            </div>
-            <span>&nbsp;</span>
-          </div>
-          <div class="col-md-4 steps-block-col">
-            <i class="fa fa-phone"></i>
-            <div>
-              <h2>(24)99999-9999</h2>
-              <em>Tire suas dúvidas no Whatsapp</em>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END STEPS -->
+    
 
     <!-- BEGIN PRE-FOOTER -->
     <div class="pre-footer">
@@ -43,23 +13,19 @@
           <!-- END BOTTOM ABOUT BLOCK -->
           <!-- BEGIN BOTTOM INFO BLOCK -->
           <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2>Information</h2>
+            <h2>Informações</h2>
             <ul class="list-unstyled">
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Delivery Information</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Customer Service</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Order Tracking</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Shipping &amp; Returns</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Contact Us</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Careers</a></li>
-              <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Payment Methods</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="shop-contacts.php">Seja um Revendedor</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="shop-contacts.php">Seja um Fornecedor</a></li>
+              <li><i class="fa fa-angle-right"></i> <a href="shop-contacts.php">Dúvidas ou Sugestões</a></li>
             </ul>
           </div>
           <!-- END INFO BLOCK -->
 
           <!-- BEGIN TWITTER BLOCK --> 
           <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2 class="margin-bottom-0">Latest Tweets</h2>
-            <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>      
+            <h2 class="margin-bottom-0">Facebook</h2>
+            <a class="twitter-timeline" href="https://www.facebook.com/CrispelRJ" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Crispel Etiquetas</a>      
           </div>
           <!-- END TWITTER BLOCK -->
 
@@ -69,8 +35,8 @@
             <address class="margin-bottom-40">
               Rua Expedicionário Joaquim A. C. Filho, 113<br>
               Paraíba do Sul, RJ<br>
-              Telefones: <br>(24) 99999-9999<br>
-              (24) 99999-9999<br>
+              Telefones: <br>(24) 99308-3680<br>
+              (24) 99395-4130<br>
               Email: <a href="mailto:info@metronic.com">crispel.rj@hotmail.com</a><br>
             </address>
           </div>
@@ -82,7 +48,7 @@
           <div class="col-md-6 col-sm-6">
             <ul class="social-icons">
               <li><a class="rss" data-original-title="rss" href="javascript:;"></a></li>
-              <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
+              <li><a class="facebook" data-original-title="facebook" href="https://www.facebook.com/CrispelRJ"></a></li>
               <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
               <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
               <li><a class="linkedin" data-original-title="linkedin" href="javascript:;"></a></li>
@@ -95,12 +61,12 @@
           <!-- BEGIN NEWLETTER -->
           <div class="col-md-6 col-sm-6">
             <div class="pre-footer-subscribe-box pull-right">
-              <h2>Newsletter</h2>
+              <h2>Notícias</h2>
               <form action="#">
                 <div class="input-group">
-                  <input type="text" placeholder="youremail@mail.com" class="form-control">
+                  <input type="text" placeholder="seuemail@mail.com" class="form-control">
                   <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                    <button class="btn btn-primary" type="submit">Inscrever</button>
                   </span>
                 </div>
               </form>

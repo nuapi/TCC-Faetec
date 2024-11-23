@@ -112,7 +112,7 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                 <!-- BEGIN TOP BAR LEFT PART -->
                 <div class="col-md-6 col-sm-6 additional-shop-info">
                     <ul class="list-unstyled list-inline">
-                        <li><i class="fa fa-phone"></i><span>(24) 23233-2323</span></li>
+                        <li><i class="fa fa-phone"></i><span>(24) 99308-3680</span></li>
                     </ul>
                 </div>
                 <!-- END TOP BAR LEFT PART -->

@@ -18,15 +18,6 @@ include('header.php');
             <div class="carousel-inner" role="listbox">
                 <!-- First slide -->
                 <div class="item carousel-item-four active" style="background: url('./assets/pages/img/shop-slider/slide1/fundograd.png') no-repeat center center; background-size: cover;">
-                    <div class="container">
-                        <div class="carousel-position-four text-center">
-                            <h2 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase" data-animation="animated fadeInDown">
-                                Etiquetas e Bobinas <br/><span class="color-red-v2">Personalizadas</span><br/> Peça já
-                            </h2>
-                            <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">Peça já sua etiqueta ou bobina <br/>
-                            fazemos também personalizadas.</p>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- Second slide -->
