@@ -2,7 +2,7 @@
 include('header.php');
 ?>
 
-    <div class="title-wrapper">
+<div class="title-wrapper" style="background: url('./assets/pages/img/title-bg/todos.png') no-repeat center center; background-size: cover;">
       <div class="container"><div class="container-inner">
         <h1><span>NOSSOS</span> PRODUTOS</h1>
         <em>Variedade de etiquetas, bobinas e ribbons!</em>

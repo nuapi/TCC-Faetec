@@ -2,7 +2,7 @@
 include('header.php');
 ?>
 
-    <div class="title-wrapper">
+<div class="title-wrapper" style="background: url('./assets/pages/img/title-bg/etiqueta.png') no-repeat center center; background-size: cover;">
       <div class="container"><div class="container-inner">
         <h1><span>ETIQUETAS</span> TÉRMICAS</h1>
         <em>Escolha já o tamanho da sua etiqueta!</em>

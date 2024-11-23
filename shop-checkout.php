@@ -1,210 +1,106 @@
 <?php
-
 // Iniciar sessão se ainda não estiver ativa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-class CheckoutHandler {
-    private $db;
-    private $cliente;
-    
-    public function __construct($db) {
-        $this->db = $db;
-        $this->cliente = isset($_SESSION['idcliente']) ? ['idcliente' => $_SESSION['idcliente']] : null;
-    }
-    
-    // Validar dados do formulário
-    public function validateFormData($data) {
-        $errors = [];
-        
-        // Validar campos obrigatórios do endereço
-        $required_fields = ['rua', 'num', 'bairro', 'cep', 'cidade', 'estado', 'pontoreferencia'];
-        
-        foreach ($required_fields as $field) {
-            if (empty($data[$field])) {
-                $errors[] = ucfirst($field) . " é obrigatório";
-            }
-        }
-        
-        // Validar método de pagamento
-        if (empty($data['metodo_pagamento'])) {
-            $errors[] = "Método de pagamento é obrigatório";
-        }
-        
-        return $errors;
-    }
-    
-    // Salvar endereço de entrega
-    public function saveShippingAddress($data) {
-        try {
-            // Removida verificação de cliente autenticado
-
-            if (isset($data['endprincipal']) && $data['endprincipal'] === 'S') {
-                $updateStmt = $this->db->prepare("
-                    UPDATE endereco 
-                    SET endprincipal = 'N' 
-                    WHERE cliente_idcliente = ?
-                ");
-                $updateStmt->execute([$_SESSION['idcliente']]);
-            }
-
-            $stmt = $this->db->prepare("
-                INSERT INTO endereco 
-                (rua, num, bairro, cep, complemento, pontoreferencia, endprincipal, cidade, estado, cliente_idcliente) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ");
-            
-            $stmt->execute([
-                $data['rua'],
-                $data['num'],
-                $data['bairro'],
-                $data['cep'],
-                $data['complemento'] ?? null,
-                $data['pontoreferencia'],
-                $data['endprincipal'] ?? 'N',
-                $data['cidade'],
-                $data['estado'],
-                $_SESSION['idcliente'] ?? 0 // Permitir 0 se não houver cliente
-            ]);
-            
-            return $this->db->lastInsertId();
-        } catch (Exception $e) {
-            error_log("Erro ao salvar endereço: " . $e->getMessage());
-            return false;
-        }
-    }
-    
-    // Criar pedido
-    public function createOrder($endereco_id, $cartItems) {
-        if (empty($cartItems)) {
-            error_log("Tentativa de criar pedido com carrinho vazio");
-            return false;
-        }
-
-        try {
-            $this->db->beginTransaction();
-            
-            $stmt = $this->db->prepare("
-                INSERT INTO pedido 
-                (data, statuspedido, valorliqbruto, cliente_idcliente, datacancelamento, reembolso, endereco_identrega) 
-                VALUES (CURDATE(), 'Pendente', ?, ?, '0000-00-00', 0, ?)
-            ");
-            
-            $totalAmount = $this->calculateTotal($cartItems);
-            $stmt->execute([
-                $totalAmount, 
-                $_SESSION['idcliente'] ?? 0, // Permitir 0 se não houver cliente
-                $endereco_id
-            ]);
-            $pedido_id = $this->db->lastInsertId();
-            
-            $stmt = $this->db->prepare("
-                INSERT INTO itempedido 
-                (qnt, precounitario, pedido_idpedido, produto_idproduto, pedido_idcliente, produto_idadm) 
-                VALUES (?, ?, ?, ?, ?, ?)
-            ");
-            
-            foreach ($cartItems as $item) {
-                $stmt->execute([
-                    $item['prod_quant'],
-                    $item['prod_preco'],
-                    $pedido_id,
-                    $item['idproduto'],
-                    $_SESSION['idcliente'] ?? 0, // Permitir 0 se não houver cliente
-                    $item['administrador_idadm']
-                ]);
-            }
-            
-            $this->db->commit();
-            return $pedido_id;
-        } catch (PDOException $e) {
-            $this->db->rollBack();
-            error_log("Erro ao criar pedido: " . $e->getMessage());
-            return false;
-        }
-    }
-    
-    // Calcular total do pedido
-    private function calculateTotal($cartItems) {
-        $total = 0;
-        foreach ($cartItems as $item) {
-            $total += $item['prod_preco'] * $item['prod_quant'];
-        }
-        $frete = 50.00; // Valor fixo do frete
-        return $total + $frete;
-    }
-    
-    // Processar pagamento
-    public function processPayment($pedido_id, $paymentMethod) {
-        try {
-            $stmt = $this->db->prepare("
-                INSERT INTO formadepagamento 
-                (metodo, valor, data, itemdesconto, pedido_idpedido, pedido_idcliente) 
-                SELECT ?, valorliqbruto, CURDATE(), 0, idpedido, cliente_idcliente
-                FROM pedido 
-                WHERE idpedido = ?
-            ");
-            
-            $stmt->execute([$paymentMethod, $pedido_id]);
-            return true;
-        } catch (PDOException $e) {
-            error_log("Erro ao processar pagamento: " . $e->getMessage());
-            return false;
-        }
-    }
-}
-
 // Processar formulário de checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pedido_id = null; // Inicializa a variável para o ID do pedido
-    $redirect_to_success = false; // Flag para controlar redirecionamento
-
     try {
-        if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-            $_SESSION['checkout_error'] = "Seu carrinho está vazio";
-            $redirect_to_success = true; // Permite redirecionar mesmo com carrinho vazio
-        }
-
         $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $checkout = new CheckoutHandler($db);
+        // 1. Salvar endereço
+        $stmt = $db->prepare("
+            INSERT INTO endereco 
+            (rua, num, bairro, cep, complemento, pontoreferencia, endprincipal, cidade, estado, cliente_idcliente) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
         
-        $errors = $checkout->validateFormData($_POST);
+        $stmt->execute([
+            $_POST['rua'],
+            $_POST['num'],
+            $_POST['bairro'],
+            $_POST['cep'],
+            $_POST['complemento'] ?? null,
+            $_POST['pontoreferencia'],
+            isset($_POST['endprincipal']) ? 'S' : 'N',
+            $_POST['cidade'],
+            $_POST['estado'],
+            $_SESSION['idcliente'] ?? 0
+        ]);
         
-        if (empty($errors)) {
-            $endereco_id = $checkout->saveShippingAddress($_POST);
-            
-            if ($endereco_id === false) {
-                throw new Exception("Erro ao salvar endereço");
-            }
+        $endereco_id = $db->lastInsertId();
 
-            $pedido_id = $checkout->createOrder($endereco_id, $_SESSION['cart']);
-            
-            if ($pedido_id === false) {
-                throw new Exception("Erro ao criar pedido");
-            }
-
-            if (!$checkout->processPayment($pedido_id, $_POST['metodo_pagamento'])) {
-                throw new Exception("Erro ao processar pagamento");
-            }
-
-            unset($_SESSION['cart']);
-            $redirect_to_success = true; // Permite redirecionar com sucesso
-        } else {
-            $_SESSION['checkout_errors'] = $errors;
-            $redirect_to_success = true; // Permite redirecionar mesmo com erros
+        // 2. Criar pedido
+        $stmt = $db->prepare("
+            INSERT INTO pedido 
+            (data, statuspedido, valorliqbruto, cliente_idcliente, endereco_identrega) 
+            VALUES (CURRENT_TIMESTAMP, 'Pendente', ?, ?, ?)
+        ");
+        
+        // Calcular valor total
+        $total = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $total += $item['prod_preco'] * $item['prod_quant'];
         }
-    } catch (Exception $e) {
-        error_log("Erro no checkout: " . $e->getMessage());
-        $_SESSION['checkout_error'] = "Erro no processamento: " . $e->getMessage();
-        $redirect_to_success = true; // Permite redirecionar mesmo com exceção
-    }
+        $total += 50.00; // Frete fixo
+        
+        $stmt->execute([
+            $total,
+            $_SESSION['idcliente'] ?? 0,
+            $endereco_id
+        ]);
+        
+        $pedido_id = $db->lastInsertId();
 
-    // Redireciona para checkout-sucesso.php
-    header('Location: checkout-sucesso.php');
-    exit(); // Importante para garantir que o script pare após o redirecionamento
+        // 3. Inserir itens do pedido
+        $stmt = $db->prepare("
+            INSERT INTO itempedido 
+            (qnt, precounitario, pedido_idpedido, produto_idproduto, pedido_idcliente, produto_idadm) 
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        
+        foreach ($_SESSION['cart'] as $item) {
+            $stmt->execute([
+                $item['prod_quant'],
+                $item['prod_preco'],
+                $pedido_id,
+                $item['idproduto'],
+                $_SESSION['idcliente'] ?? 0,
+                $item['administrador_idadm']
+            ]);
+        }
+
+        // 4. Salvar forma de pagamento
+        $stmt = $db->prepare("
+            INSERT INTO formadepagamento 
+            (metodo, valor, data, itemdesconto, pedido_idpedido, pedido_idcliente) 
+            VALUES (?, ?, CURRENT_TIMESTAMP, 0, ?, ?)
+        ");
+        
+        $stmt->execute([
+            $_POST['metodo_pagamento'],
+            $total,
+            $pedido_id,
+            $_SESSION['idcliente'] ?? 0
+        ]);
+
+        // 5. Salvar número do pedido na sessão para exibir na página de sucesso
+        $_SESSION['ultimo_pedido'] = $pedido_id;
+        
+        // 6. Limpar carrinho
+        unset($_SESSION['cart']);
+        
+        // 7. Redirecionar para página de sucesso
+        header('Location: checkout-sucesso.php');
+        exit();
+
+    } catch (Exception $e) {
+        // Se houver erro, apenas redireciona para página de sucesso
+        header('Location: checkout-sucesso.php');
+        exit();
+    }
 }
 ?>
 

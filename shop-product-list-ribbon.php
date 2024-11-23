@@ -2,10 +2,10 @@
 include('header.php');
 ?>
 
-<div class="title-wrapper" style="background: url('./assets/pages/img/title-bg/bobina.png') no-repeat center center; background-size: cover;">
+<div class="title-wrapper" style="background: url('./assets/pages/img/title-bg/ribbon.png') no-repeat center center; background-size: cover;">
       <div class="container"><div class="container-inner">
-        <h1><span>BOBINAS</span> TÉRMICAS</h1>
-        <em>Escolha já o tamanho da sua Bobina!</em>
+        <h1><span>RIBBON</span> CERA</h1>
+        <em>Escolha já o tamanho do seu Ribbon!</em>
       </div></div>
     </div>
 
@@ -148,7 +148,7 @@ include('header.php');
             </div>
             <!-- BEGIN PRODUCT LIST -->
             <div class="row product-list">
-            <?php include('get_bobinas.php'); ?>
+            <?php include('get_ribbon.php'); ?>
             <?php while($row=$bobina_products->fetch_assoc()) { ?>
               <!-- PRODUCT ITEM START -->
               <div class="col-md-4 col-sm-6 col-xs-12">

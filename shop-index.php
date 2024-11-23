@@ -17,7 +17,7 @@ include('header.php');
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <!-- First slide -->
-                <div class="item carousel-item-four active">
+                <div class="item carousel-item-four active" style="background: url('./assets/pages/img/shop-slider/slide1/fundograd.png') no-repeat center center; background-size: cover;">
                     <div class="container">
                         <div class="carousel-position-four text-center">
                             <h2 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase" data-animation="animated fadeInDown">
@@ -254,7 +254,7 @@ include('header.php');
                   <div class="image-overlay">
                       <div class="overlay-text">
                           <h3 style="color: white; margin-bottom: 15px;">Ribbons</h3>
-                          <a href="shop-product-list.php" class="btn-overlay">Ver Produtos</a>
+                          <a href="shop-product-list-ribbon.php" class="btn-overlay">Ver Produtos</a>
                       </div>
                   </div>
               </div>
