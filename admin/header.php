@@ -54,7 +54,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-file-alt"></i>
                                 <span>
-                                    Reports <i class="fas fa-angle-down"></i>
+                                    Relatórios <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -66,14 +66,14 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item">
                             <a class="nav-link" href="products.php">
                                 <i class="fas fa-shopping-cart"></i>
-                                Products
+                                Produtos
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.php">
                                 <i class="far fa-user"></i>
-                                Accounts
+                                Contas
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -81,7 +81,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cog"></i>
                                 <span>
-                                    Settings <i class="fas fa-angle-down"></i>
+                                    Configurações <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

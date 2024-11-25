@@ -213,6 +213,66 @@
         </footer>
     </div>
 
+    <script>
+    function drawLineChart() {
+        if ($("#lineChart").length) {
+            ctxLine = document.getElementById("lineChart").getContext("2d");
+            optionsLine = {
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Vendas em R$"
+                        }
+                    }]
+                }
+            };
+
+            // Dados do PHP convertidos para JavaScript
+            const salesData = <?php echo json_encode($annualSales); ?>;
+            
+            configLine = {
+                type: "line",
+                data: {
+                    labels: salesData.labels,
+                    datasets: [{
+                        label: "Vendas Anuais",
+                        data: salesData.data,
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        cubicInterpolationMode: "monotone",
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: "index",
+                        intersect: false,
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return "R$ " + Number(tooltipItem.value).toLocaleString('pt-BR');
+                            }
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            }
+                        }]
+                    }
+                }
+            };
+
+            lineChart = new Chart(ctxLine, configLine);
+        }
+    }
+</script>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>
@@ -247,6 +307,7 @@
             });
         })
     </script>
+
 </body>
 
 </html>

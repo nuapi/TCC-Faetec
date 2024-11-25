@@ -37,6 +37,7 @@
 
                 ?>
 
+
     <div class="container mt-5">
       <div class="row tm-content-row">
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
@@ -75,7 +76,7 @@
             </div>
             <!-- table container -->
             <a
-              href="add-product.html"
+              href="add-product.php"
               class="btn btn-primary btn-block text-uppercase mb-3">Adicionar produto</a>
             <button class="btn btn-primary btn-block text-uppercase">
               Remover produtos selecionados
