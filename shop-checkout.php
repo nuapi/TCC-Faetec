@@ -4,11 +4,46 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once 'checkout-validation.php';
+
 // Processar formulário de checkout
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Salvar todos os dados do formulário na sessão primeiro
+    $_SESSION['ultimo_pedido'] = [
+        'endereco' => [
+            'rua' => $_POST['rua'],
+            'num' => $_POST['num'],
+            'bairro' => $_POST['bairro'],
+            'cep' => $_POST['cep'],
+            'complemento' => $_POST['complemento'] ?? '',
+            'pontoreferencia' => $_POST['pontoreferencia'],
+            'cidade' => $_POST['cidade'],
+            'estado' => $_POST['estado']
+        ],
+        'metodo_pagamento' => $_POST['metodo_pagamento'],
+        'data' => date('Y-m-d H:i:s'),
+        'itens' => $_SESSION['cart'] ?? [],
+        'status' => 'Pendente'
+    ];
+
+    // Calcular valores
+    $subtotal = 0;
+    if (isset($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $item) {
+            $subtotal += $item['prod_preco'] * $item['prod_quant'];
+        }
+    }
+    $frete = 50.00;
+    $total = $subtotal + $frete;
+    
+    $_SESSION['ultimo_pedido']['valor_total'] = $total;
+
     try {
         $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        // Iniciar transação
+        $db->beginTransaction();
         
         // 1. Salvar endereço
         $stmt = $db->prepare("
@@ -31,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
         $endereco_id = $db->lastInsertId();
+        $_SESSION['ultimo_pedido']['endereco_id'] = $endereco_id;
 
         // 2. Criar pedido
         $stmt = $db->prepare("
@@ -39,13 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             VALUES (CURRENT_TIMESTAMP, 'Pendente', ?, ?, ?)
         ");
         
-        // Calcular valor total
-        $total = 0;
-        foreach ($_SESSION['cart'] as $item) {
-            $total += $item['prod_preco'] * $item['prod_quant'];
-        }
-        $total += 50.00; // Frete fixo
-        
         $stmt->execute([
             $total,
             $_SESSION['idcliente'] ?? 0,
@@ -53,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
         $pedido_id = $db->lastInsertId();
+        $_SESSION['ultimo_pedido']['pedido_id'] = $pedido_id;
 
         // 3. Inserir itens do pedido
         $stmt = $db->prepare("
@@ -86,21 +116,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['idcliente'] ?? 0
         ]);
 
-        // 5. Salvar número do pedido na sessão para exibir na página de sucesso
-        $_SESSION['ultimo_pedido'] = $pedido_id;
+        // Commit da transação
+        $db->commit();
         
-        // 6. Limpar carrinho
+        // Limpar carrinho apenas se a transação for bem-sucedida
         unset($_SESSION['cart']);
         
-        // 7. Redirecionar para página de sucesso
-        header('Location: checkout-sucesso.php');
-        exit();
-
     } catch (Exception $e) {
-        // Se houver erro, apenas redireciona para página de sucesso
-        header('Location: checkout-sucesso.php');
-        exit();
+        // Rollback em caso de erro
+        if (isset($db)) {
+            $db->rollBack();
+        }
+        error_log("Erro no checkout: " . $e->getMessage());
     }
+
+    // Redirecionar para página de sucesso independentemente do resultado
+    header('Location: checkout-sucesso.php');
+    $_SESSION['checkout_completed'] = true;
+    exit();
 }
 ?>
 

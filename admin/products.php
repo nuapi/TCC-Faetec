@@ -42,6 +42,17 @@
       <div class="row tm-content-row">
         <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-products">
+          <?php if(isset($_GET['success']) && $_GET['success'] == "produto_deletado"){ ?>
+                <div class="alert alert-success" role="alert">
+                    Produto removido com sucesso!
+                </div>
+            <?php } ?>
+
+            <?php if(isset($_GET['error']) && $_GET['error'] == "erro_ao_deletar"){ ?>
+                <div class="alert alert-danger" role="alert">
+                    Erro ao tentar remover o produto. Por favor, tente novamente.
+                </div>
+            <?php } ?>
             <div class="tm-product-table-container">
               <table class="table table-hover tm-table-small tm-product-table">
                 <thead>
@@ -65,9 +76,11 @@
                     <td>28 March 2019</td>
                     <td><a class="btn btn-primary" href="edit-product.php?idproduto=<?php echo $produto['idproduto'];?>">Editar</a></td>
                     <td>
-                      <a href="#" class="tm-product-delete-link">
-                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                      </a>
+                        <a href="delete-product.php?idproduto=<?php echo $produto['idproduto'];?>" 
+                          class="tm-product-delete-link"
+                          onclick="return confirm('Tem certeza que deseja excluir este produto?');">
+                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
                     </td>
                   </tr>
                   <?php } ?>

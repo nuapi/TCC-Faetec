@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 
 // Função para upload de imagem
 function uploadImagem($file, $index) {
-    $target_dir = "./assets/prodG/";
+    $target_dir = "assets/prodG/";
     $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
     $newFileName = uniqid() . "." . $imageFileType;
     $target_file = $target_dir . $newFileName;
