@@ -21,55 +21,22 @@ include('header.php');
                 </div>
                 
                 <!-- Second slide -->
-                <div class="item carousel-item-five">
+                <div class="item carousel-item-five" style="background: url('./assets/pages/img/shop-slider/slide1/slide2.png') no-repeat center center; background-size: cover;">
                     <div class="container">
                         <div class="carousel-position-four text-center">
-                            <h2 class="animate-delay carousel-title-v4" data-animation="animated fadeInDown">
-                                Unlimted
-                            </h2>
-                            <p class="carousel-subtitle-v2" data-animation="animated fadeInDown">
-                                Layout Options
-                            </p>
-                            <p class="carousel-subtitle-v3 margin-bottom-30" data-animation="animated fadeInUp">
-                                Fully Responsive
-                            </p>
-                            <a class="carousel-btn" href="#" data-animation="animated fadeInUp">See More Details</a>
                         </div>
-                        <img class="carousel-position-five animate-delay hidden-sm hidden-xs" src="assets/pages/img/shop-slider/slide2/price.png" alt="Price" data-animation="animated zoomIn">
                     </div>
                 </div>
 
                 <!-- Third slide -->
-                <div class="item carousel-item-six">
+                <div class="item carousel-item-six" style="background: url('./assets/pages/img/shop-slider/slide1/slide3.png') no-repeat center center; background-size: cover;">
                     <div class="container">
                         <div class="carousel-position-four text-center">
-                            <span class="carousel-subtitle-v3 margin-bottom-15" data-animation="animated fadeInDown">
-                                Full Admin &amp; Frontend
-                            </span>
-                            <p class="carousel-subtitle-v4" data-animation="animated fadeInDown">
-                                eCommerce UI
-                            </p>
-                            <p class="carousel-subtitle-v3" data-animation="animated fadeInDown">
-                                Is Ready For Your Project
-                            </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Fourth slide -->
-                <div class="item carousel-item-seven">
-                   <div class="center-block">
-                        <div class="center-block-wrap">
-                            <div class="center-block-body">
-                                <h2 class="carousel-title-v1 margin-bottom-20" data-animation="animated fadeInDown">
-                                    The most <br/>
-                                    wanted bijouterie
-                                </h2>
-                                <a class="carousel-btn" href="#" data-animation="animated fadeInUp">But It Now!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Controls -->
@@ -95,7 +62,7 @@ include('header.php');
               <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
-                    <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
                       <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>
@@ -119,10 +86,8 @@ include('header.php');
             <ul class="list-group margin-bottom-25 sidebar-menu">
               <li class="list-group-item clearfix"><a href="shop-product-list-etiqueta.php"><i class="fa fa-angle-right"></i> Etiquetas</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list-bobina.php"><i class="fa fa-angle-right"></i> Bobinas</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Ribbons</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Personalizados</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Sports</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Brands</a></li>
+              <li class="list-group-item clearfix"><a href="shop-product-list-ribbon.php"><i class="fa fa-angle-right"></i> Ribbons</a></li>
+              <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Todos</a></li>
             </ul>
           </div>
           <!-- END SIDEBAR -->
@@ -136,7 +101,7 @@ include('header.php');
               <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
-                    <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="produto" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
                       <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>

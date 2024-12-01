@@ -1,112 +1,194 @@
 <?php include('header.php')?>
+<?php
+// Função para buscar dados de pedidos por período
+function getOrderData($conn, $period = 'daily') {
+    $orderData = [];
 
-        <div class="container">
+    switch ($period) {
+        case 'daily':
+            // Buscar dados de pedidos dos últimos 30 dias
+            $query = "SELECT DATE(data) as order_date, COUNT(*) as order_count 
+                      FROM pedido 
+                      WHERE data >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) 
+                      GROUP BY order_date 
+                      ORDER BY order_date";
+            break;
+        
+        case 'monthly':
+            // Buscar dados de pedidos dos últimos 12 meses
+            $query = "SELECT DATE_FORMAT(data, '%Y-%m') as order_month, COUNT(*) as order_count 
+                      FROM pedido 
+                      WHERE data >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH) 
+                      GROUP BY order_month 
+                      ORDER BY order_month";
+            break;
+        
+        case 'annual':
+        default:
+            // Buscar dados de pedidos dos últimos 5 anos
+            $query = "SELECT YEAR(data) as order_year, COUNT(*) as order_count 
+                      FROM pedido 
+                      WHERE data >= DATE_SUB(CURDATE(), INTERVAL 5 YEAR) 
+                      GROUP BY order_year 
+                      ORDER BY order_year";
+            break;
+    }
+
+    $result = $conn->query($query);
+    
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $orderData[] = $row;
+        }
+    }
+
+    return $orderData;
+}
+
+// Buscar dados de pedidos para diferentes períodos
+$dailyOrderCount = getOrderData($conn, 'daily');
+$monthlyOrderCount = getOrderData($conn, 'monthly');
+$annualOrderCount = getOrderData($conn, 'annual');
+
+// Adicionar função para gerar dados de vendas fictícios (para demonstração)
+function generateSalesData($orderData) {
+    return array_map(function($item) {
+        $baseValue = isset($item['order_count']) ? $item['order_count'] * 50 : 1000;
+        return [
+            'label' => isset($item['order_date']) ? $item['order_date'] : 
+                       (isset($item['order_month']) ? $item['order_month'] : $item['order_year']),
+            'value' => rand($baseValue * 0.8, $baseValue * 1.2)
+        ];
+    }, $orderData);
+}
+
+$dailyOrderChartData = [
+    'labels' => array_column($dailyOrderCount, 'order_date'),
+    'data' => array_column($dailyOrderCount, 'order_count')
+];
+
+$monthlyOrderChartData = [
+    'labels' => array_column($monthlyOrderCount, 'order_month'),
+    'data' => array_column($monthlyOrderCount, 'order_count')
+];
+
+$annualOrderChartData = [
+    'labels' => array_column($annualOrderCount, 'order_year'),
+    'data' => array_column($annualOrderCount, 'order_count')
+];
+
+// Função para calcular receita anual
+function calculateAnnualRevenue($conn) {
+    $annualRevenueData = [];
+
+    // Consulta usando valorliqbruto
+    $query = "SELECT 
+                YEAR(data) as order_year, 
+                SUM(valorliqbruto) as total_revenue,
+                COUNT(*) as total_orders
+              FROM pedido 
+              GROUP BY YEAR(data) 
+              ORDER BY order_year DESC 
+              LIMIT 5";
+
+    $result = $conn->query($query);
+    
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $annualRevenueData[] = $row;
+        }
+    }
+
+    return $annualRevenueData;
+}
+
+// Calcular dados de receita anual
+$annualRevenueReport = calculateAnnualRevenue($conn);
+?>
+
+<div class="container">
             <div class="row">
                 <div class="col">
-                    <p class="text-white mt-5 mb-5">Welcome back, <b>Admin</b></p>
+                    <p class="text-white mt-5 mb-5">Bem vindo, <b>Admin</b></p>
                 </div>
             </div>
             <!-- row -->
             <div class="row tm-content-row">
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Latest Hits</h2>
-                        <canvas id="lineChart"></canvas>
+                        <h2 class="tm-block-title">Número de Pedidos Diários</h2>
+                        <canvas id="dailyOrderCountChart"></canvas>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Performance</h2>
-                        <canvas id="barChart"></canvas>
+                        <h2 class="tm-block-title">Número de Pedidos Mensais</h2>
+                        <canvas id="monthlyOrderCountChart"></canvas>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller">
-                        <h2 class="tm-block-title">Storage Information</h2>
-                        <div id="pieChartContainer">
-                            <canvas id="pieChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
-                        </div>                        
+                        <h2 class="tm-block-title">Número de Pedidos Anuais</h2>
+                        <canvas id="annualOrderCountChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
                     </div>
                 </div>
+                <style>
+                    #annualOrderCountChart {
+                        max-width: 100%;
+                        height: auto !important;
+                        max-height: 300px;
+                    }
+
+                    .tm-block-taller canvas {
+                        width: 100%;
+                        height: auto !important;
+                    }
+                </style>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
-                        <h2 class="tm-block-title">Notification List</h2>
-                        <div class="tm-notification-items">
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Jessica</b> and <b>6 others</b> sent you new <a href="#"
-                                            class="tm-notification-link">product updates</a>. Check new orders.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Oliver Too</b> and <b>6 others</b> sent you existing <a href="#"
-                                            class="tm-notification-link">product updates</a>. Read more reports.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Victoria</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">order updates</a>. Read order information.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Laura Cute</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product records</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Samantha</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">order stuffs</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Sophie</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Lily A</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Amara</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                            <div class="media tm-notification-item">
-                                <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                <div class="media-body">
-                                    <p class="mb-2"><b>Cinthela</b> and <b>6 others</b> sent you <a href="#"
-                                            class="tm-notification-link">product updates</a>.</p>
-                                    <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                </div>
-                            </div>
-                        </div>
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
+        <h2 class="tm-block-title">Relatório de Receita Anual</h2>
+        <div class="tm-revenue-items">
+            <?php foreach($annualRevenueReport as $yearData): ?>
+                <div class="media tm-revenue-item">
+                    <div class="media-body">
+                        <h3 class="text-white mb-2">Ano <?php echo $yearData['order_year']; ?></h3>
+                        <p class="mb-1">
+                            <strong>Receita Total:</strong> 
+                            R$ <?php echo number_format($yearData['total_revenue'], 2, ',', '.'); ?>
+                        </p>
+                        <p class="mb-1">
+                            <strong>Total de Pedidos:</strong> 
+                            <?php echo $yearData['total_orders']; ?>
+                        </p>
+                        <span class="tm-small tm-text-color-secondary">
+                            Média por Pedido: 
+                            R$ <?php echo number_format($yearData['total_revenue'] / $yearData['total_orders'], 2, ',', '.'); ?>
+                        </span>
                     </div>
                 </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<style>
+    .tm-revenue-items {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.tm-revenue-item {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 15px 0;
+}
+
+.tm-revenue-item:last-child {
+    border-bottom: none;
+}
+
+.tm-revenue-item .media-body {
+    color: white;
+}
+</style>
 
                 <?php
                 //1. numero da pagina
@@ -214,99 +296,190 @@
     </div>
 
     <script>
-    function drawLineChart() {
-        if ($("#lineChart").length) {
-            ctxLine = document.getElementById("lineChart").getContext("2d");
-            optionsLine = {
+function drawDailyOrderCountChart() {
+    if ($("#dailyOrderCountChart").length) {
+        ctxDailyOrderCount = document.getElementById("dailyOrderCountChart").getContext("2d");
+        
+        // Dados do PHP convertidos para JavaScript
+        const dailyOrderCountData = <?php echo json_encode($dailyOrderChartData); ?>;
+        
+        configDailyOrderCount = {
+            type: "line",
+            data: {
+                labels: dailyOrderCountData.labels,
+                datasets: [{
+                    label: "Número de Pedidos Diários",
+                    data: dailyOrderCountData.data,
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
                 scales: {
                     yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Vendas em R$"
+                        ticks: {
+                            beginAtZero: true
                         }
                     }]
                 }
-            };
+            }
+        };
 
-            // Dados do PHP convertidos para JavaScript
-            const salesData = <?php echo json_encode($annualSales); ?>;
-            
-            configLine = {
-                type: "line",
+        dailyOrderCountChart = new Chart(ctxDailyOrderCount, configDailyOrderCount);
+    }
+}
+
+function drawMonthlyOrderCountChart() {
+    if ($("#monthlyOrderCountChart").length) {
+        ctxMonthlyOrderCount = document.getElementById("monthlyOrderCountChart").getContext("2d");
+        
+        // Dados do PHP convertidos para JavaScript
+        const monthlyOrderCountData = <?php echo json_encode($monthlyOrderChartData); ?>;
+        
+        configMonthlyOrderCount = {
+            type: "bar",
+            data: {
+                labels: monthlyOrderCountData.labels,
+                datasets: [{
+                    label: "Número de Pedidos Mensais",
+                    data: monthlyOrderCountData.data,
+                    backgroundColor: "rgba(54, 162, 235, 0.6)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        };
+
+        monthlyOrderCountChart = new Chart(ctxMonthlyOrderCount, configMonthlyOrderCount);
+    }
+}
+
+function drawAnnualOrderCountChart() {
+    if ($("#annualOrderCountChart").length) {
+        ctxAnnualOrderCount = document.getElementById("annualOrderCountChart").getContext("2d");
+        
+        // Dados do PHP convertidos para JavaScript
+        const annualOrderCountData = <?php echo json_encode($annualOrderChartData); ?>;
+        
+        configAnnualOrderCount = {
+            type: "bar",
+            data: {
+                labels: annualOrderCountData.labels,
+                datasets: [{
+                    label: "Número de Pedidos Anuais",
+                    data: annualOrderCountData.data,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        };
+
+        annualOrderCountChart = new Chart(ctxAnnualOrderCount, configAnnualOrderCount);
+    }
+}
+</script>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/Chart.min.js"></script>
+
+<script>
+// Configurações globais do Chart.js
+Chart.defaults.global.defaultFontColor = 'white';
+
+// Adicione esta verificação no início
+if (typeof Chart === 'undefined') {
+    console.error('Chart.js não foi carregado corretamente');
+}
+
+function drawCharts() {
+    const chartConfigs = [
+        {
+            elementId: "dailyOrderCountChart",
+            type: "line",
+            data: <?php echo json_encode($dailyOrderChartData); ?>,
+            label: "Número de Pedidos Diários",
+            borderColor: "rgba(255, 99, 132, 1)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)"
+        },
+        {
+            elementId: "monthlyOrderCountChart",
+            type: "bar",
+            data: <?php echo json_encode($monthlyOrderChartData); ?>,
+            label: "Número de Pedidos Mensais",
+            backgroundColor: "rgba(54, 162, 235, 0.6)"
+        },
+        {
+            elementId: "annualOrderCountChart",
+            type: "bar",
+            data: <?php echo json_encode($annualOrderChartData); ?>,
+            label: "Número de Pedidos Anuais",
+            backgroundColor: "rgba(75, 192, 192, 0.6)"
+        }
+    ];
+
+    chartConfigs.forEach(function(config) {
+        const ctx = document.getElementById(config.elementId);
+        if (ctx) {
+            new Chart(ctx.getContext("2d"), {
+                type: config.type,
                 data: {
-                    labels: salesData.labels,
+                    labels: config.data.labels,
                     datasets: [{
-                        label: "Vendas Anuais",
-                        data: salesData.data,
-                        fill: false,
-                        borderColor: "rgb(75, 192, 192)",
-                        cubicInterpolationMode: "monotone",
-                        pointRadius: 0
+                        label: config.label,
+                        data: config.data.data,
+                        borderColor: config.borderColor,
+                        backgroundColor: config.backgroundColor,
+                        fill: config.type === 'line'
                     }]
                 },
                 options: {
                     responsive: true,
-                    tooltips: {
-                        mode: "index",
-                        intersect: false,
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                return "R$ " + Number(tooltipItem.value).toLocaleString('pt-BR');
-                            }
-                        }
-                    },
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true,
-                                callback: function(value) {
-                                    return 'R$ ' + value.toLocaleString('pt-BR');
-                                }
+                                beginAtZero: true
                             }
                         }]
                     }
                 }
-            };
-
-            lineChart = new Chart(ctxLine, configLine);
-        }
-    }
-</script>
-
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- https://jquery.com/download/ -->
-    <script src="js/moment.min.js"></script>
-    <!-- https://momentjs.com/ -->
-    <script src="js/Chart.min.js"></script>
-    <!-- http://www.chartjs.org/docs/latest/ -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- https://getbootstrap.com/ -->
-    <script src="js/tooplate-scripts.js"></script>
-    <script>
-        Chart.defaults.global.defaultFontColor = 'white';
-        let ctxLine,
-            ctxBar,
-            ctxPie,
-            optionsLine,
-            optionsBar,
-            optionsPie,
-            configLine,
-            configBar,
-            configPie,
-            lineChart;
-        barChart, pieChart;
-        // DOM is ready
-        $(function () {
-            drawLineChart(); // Line Chart
-            drawBarChart(); // Bar Chart
-            drawPieChart(); // Pie Chart
-
-            $(window).resize(function () {
-                updateLineChart();
-                updateBarChart();                
             });
-        })
-    </script>
+        }
+    });
+}
+
+// Certifique-se de que o jQuery está carregado
+$(document).ready(function() {
+    if (window.Chart) {
+        drawCharts();
+    } else {
+        console.error('Chart.js não foi carregado');
+    }
+});
+</script>
 
 </body>
 

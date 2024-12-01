@@ -17,101 +17,9 @@ include('header.php');
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
-          <!-- BEGIN SIDEBAR -->
-          <div class="sidebar col-md-3 col-sm-5">
-            <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix dropdown active">
-                <a href="shop-product-list.html" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  Etiquetas
-                  
-                </a>
-                <ul class="dropdown-menu" style="display:block;">
-                  <li class="list-group-item dropdown clearfix active">
-                    <a href="shop-product-list.html" class="collapsed"><i class="fa fa-angle-right"></i> Para Balanças</a>
-                      <ul class="dropdown-menu" style="display:block;">
-                        <li class="list-group-item dropdown clearfix">
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 60x30 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 60x40 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 60x60 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 40x30 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 40x40 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 40x60 </a>
-                        </li>
-                      </ul>
-
-                      <li class="list-group-item dropdown clearfix active">
-                        <a href="shop-product-list.php" class="collapsed"><i class="fa fa-angle-right"></i> Para Gôndolas</a>
-                          <ul class="dropdown-menu" style="display:block;">
-                            <li class="list-group-item dropdown clearfix">
-                              <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 105x40 </a>
-                              <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 108x30 </a>
-                            </li>
-                          </ul>
-
-                          <li class="list-group-item dropdown clearfix active">
-                            <a href="shop-product-list.php" class="collapsed"><i class="fa fa-angle-right"></i> Para Código de Barras</a>
-                              <ul class="dropdown-menu" style="display:block;">
-                                <li class="list-group-item dropdown clearfix">
-                                  <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 33x22 </a>
-                                  <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 33x26 </a>
-                                </li>
-                              </ul>
-
-                              <li class="list-group-item dropdown clearfix active">
-                                <a href="shop-product-list.php" class="collapsed"><i class="fa fa-angle-right"></i> Para Precificação</a>
-                                  <ul class="dropdown-menu" style="display:block;">
-                                    <li class="list-group-item dropdown clearfix">
-                                      <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> MX </a>
-                                      <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 60x40 </a>
-                                    </li>
-                                  </ul>
-                  </li>
-                  <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
-                </ul>
-              </li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Bobinas</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Ribbons</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Personalizados</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Brands</a></li>
-            </ul>
-
-            <div class="sidebar-filter margin-bottom-25">
-              <h2>Filtrar</h2>
-              <h3>Disponibilidade</h3>
-              <div class="checkbox-list">
-                <label><input type="checkbox"> Indisponível (3)</label>
-                <label><input type="checkbox"> Em Estoque (26)</label>
-              </div>
-
-              <h3>Preço</h3>
-              <p>
-                <label for="amount">Range:</label>
-                <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
-              </p>
-              <div id="slider-range"></div>
-            </div>
-
-            <div class="sidebar-products clearfix">
-              <h2>Bestsellers</h2>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k1.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$31.00</div>
-              </div>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k4.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$23.00</div>
-              </div>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k3.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$86.00</div>
-              </div>
-            </div>
-          </div>
-          <!-- END SIDEBAR -->
+        <?php 
+        include('sidebar.php');
+        ?>
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-7">
             <div class="row list-view-sorting clearfix">
@@ -154,10 +62,9 @@ include('header.php');
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/60x40 (1).png" class="img-responsive" alt="Berry Lace Dress">
+                  <img src="./assets/pages/img/products/<?php echo $row['prod_imagem2'];?>" class="img-responsive" alt="Produto">
                     <div>
-                      <a href="assets/pages/img/products/60x40 (1).png" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
+                      <a href="assets/pages/img/products/<?php echo $row['prod_imagem2'];?>" class="btn btn-default fancybox-button">Zoom</a>
                     </div>
                   </div>
                   <h3><a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>"><?php echo $row['prod_nome'];?></a></h3>

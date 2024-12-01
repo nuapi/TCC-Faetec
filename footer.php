@@ -24,8 +24,9 @@
 
           <!-- BEGIN TWITTER BLOCK --> 
           <div class="col-md-3 col-sm-6 pre-footer-col">
-            <h2 class="margin-bottom-0">Facebook</h2>
-            <a class="twitter-timeline" href="https://www.facebook.com/CrispelRJ" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Crispel Etiquetas</a>      
+            <h2 class="margin-bottom-0">Redes Sociais</h2>
+            <a class="twitter-timeline" href="https://www.facebook.com/CrispelRJ" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Facebook</a><br>
+            <a class="twitter-timeline" href="https://lista.mercadolivre.com.br/_CustId_1933198808" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Mercado Livre</a>        
           </div>
           <!-- END TWITTER BLOCK -->
 

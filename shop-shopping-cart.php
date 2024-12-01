@@ -15,12 +15,12 @@ if(isset($_POST['add_to_cart'])){
       $idproduto = $_POST['idproduto'];
     
       $prod_array = array(
-      'idproduto' => $_POST['idproduto'],
-      'prod_nome' => $_POST['prod_nome'],
-      'prod_preco' => $_POST['prod_preco'],
-      'prod_imagem' => $_POST['prod_imagem'],
-      'prod_quant' => $_POST['prod_quant']
-    );
+        'idproduto' => $_POST['idproduto'],
+        'prod_nome' => $_POST['prod_nome'],
+        'prod_preco' => $_POST['prod_preco'],
+        'prod_imagem' => $_POST['prod_imagem'],
+        'prod_quant' => $_POST['prod_quant']
+      );
 
     $_SESSION['cart'][$idproduto] = $prod_array;
 
@@ -133,7 +133,7 @@ include('header.php');
                   <tr>
                   <td class="goods-page-image">
                     <a href="javascript:;">
-                      <img src="./assets/prodG/<?php echo $value['prod_imagem'];?>" 
+                    <img src="assets/prodG/<?php echo $value['prod_imagem']; ?>" 
                           alt="<?php echo $value['prod_nome'];?>"
                           style="width: 100px; height: 100px; object-fit: cover;"
                           class="img-thumbnail">
@@ -141,11 +141,10 @@ include('header.php');
                   </td> 
                     <td class="goods-page-description">
                       <h3><a href="javascript:;"><?php echo $value['prod_nome'];?></a></h3>
-                      <p><strong>Item 1</strong> - Color: Green; Size: S</p>
-                      <em>More info is here</em>
+                      <p><strong>Item</strong> - <?php echo $value['prod_nome'];?></p>
                     </td>
                     <td class="goods-page-ref-no">
-                      javc2133
+                    <?php echo $value['idproduto'];?>
                     </td>
                     <td class="goods-page-quantity">
                         <div class="product-quantity">

@@ -120,7 +120,6 @@ Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-resp
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
                         <li><a href="account.php">Minha Conta</a></li>
-                        <li><a href="shop-wishlist.html">Lista de Desejos</a></li>
                         <li><a href="shop-checkout.php">Checkout</a></li>
                         <li><a href="login.php">Log In</a></li>
                     </ul>

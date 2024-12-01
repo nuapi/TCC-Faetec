@@ -25,101 +25,13 @@ include('header.php');
         <ul class="breadcrumb">
             <li><a href="shop-index.php">Início</a></li>
             <li><a href="">Etiquetas</a></li>
-            <li class="active">Etiqueta 60x40</li>
         </ul>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
-          <!-- BEGIN SIDEBAR -->
-          <div class="sidebar col-md-3 col-sm-5">
-            <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix dropdown" data-bs-toggle="list">
-                <a href="shop-product-list.html" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  Etiquetas
-                  
-                </a>
-                <ul class="dropdown-menu" style="display:block;">
-                  <li class="list-group-item dropdown clearfix">
-                    <a href="shop-product-list.html" class="collapsed"><i class="fa fa-angle-right"></i> Para Balanças</a>
-                      <ul class="dropdown-menu" style="display:block;">
-                        <li class="list-group-item dropdown clearfix">
-                          <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 60x30 </a>
-                          <a href="shop-60x40.html"><i class="fa fa-angle-right"></i> 60x40 </a>
-                          <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 60x60 </a>
-                          <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 40x30 </a>
-                          <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 40x40 </a>
-                          <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 40x60 </a>
-                        </li>
-                      </ul>
-
-                      <li class="list-group-item dropdown clearfix">
-                        <a href="shop-product-list.html" class="collapsed"><i class="fa fa-angle-right"></i> Para Gôndolas</a>
-                          <ul class="dropdown-menu" style="display:block;">
-                            <li class="list-group-item dropdown clearfix">
-                              <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 105x40 </a>
-                              <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 108x30 </a>
-                            </li>
-                          </ul>
-
-                          <li class="list-group-item dropdown clearfix">
-                            <a href="shop-product-list.html" class="collapsed"><i class="fa fa-angle-right"></i> Para Código de Barras</a>
-                              <ul class="dropdown-menu" style="display:block;">
-                                <li class="list-group-item dropdown clearfix">
-                                  <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 33x22 </a>
-                                  <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 33x26 </a>
-                                </li>
-                              </ul>
-
-                              <li class="list-group-item dropdown clearfix">
-                                <a href="shop-product-list.html" class="collapsed"><i class="fa fa-angle-right"></i> Para Precificação</a>
-                                  <ul class="dropdown-menu" style="display:block;">
-                                    <li class="list-group-item dropdown clearfix">
-                                      <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> MX </a>
-                                      <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 60x40 </a>
-                                    </li>
-                                  </ul>
-                  </li>
-                  <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
-                </ul>
-              </li>
-              <li class="list-group-item clearfix dropdown active">
-                <a href="shop-product-list.html" class="collapsed">
-                  <i class="fa fa-angle-right"></i>
-                  Bobinas
-                  
-                </a>
-                <ul class="dropdown-menu" style="display:block;">
-                  <li class="list-group-item dropdown clearfix active">
-                            <li class="list-group-item dropdown clearfix">
-                              <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 80x40 </a>
-                              <a href="shop-product-list.html"><i class="fa fa-angle-right"></i> 80x80 </a>
-                            </li>
-                          </ul>
-              <li class="list-group-item clearfix"><a href="shop-ribbon.html"><i class="fa fa-angle-right"></i> Ribbons</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Personalizados</a></li>
-              <li class="list-group-item clearfix"><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Brands</a></li>
-            </ul>
-
-            <div class="sidebar-products clearfix">
-              <h2>Bestsellers</h2>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k1.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$31.00</div>
-              </div>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k4.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$23.00</div>
-              </div>
-              <div class="item">
-                <a href="shop-item.html"><img src="assets/pages/img/products/k3.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                <div class="price">$86.00</div>
-              </div>
-            </div>
-          </div>
-          <!-- END SIDEBAR -->
+        <?php 
+        include('sidebar.php');
+        ?>
+          <!-- BEGIN CONTENT -->
 
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-7">
@@ -255,7 +167,7 @@ include('header.php');
               <div class="col-md-4 col-sm-6"> <!-- Mantido col-md-4 col-sm-6 -->
                 <div class="product-item">
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
-                    <img src="./assets/prodcrispel/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
+                    <img src="./assets/prodG/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
                       <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>
@@ -274,22 +186,16 @@ include('header.php');
       </div>
     </div>
 
-    <!-- BEGIN BRANDS -->
-    <div class="brands">
+<!-- BEGIN BRANDS -->
+<div class="brands">
       <div class="container">
             <div class="owl-carousel owl-carousel6-brands">
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/esprit.jpg" alt="esprit" title="esprit"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/gap.jpg" alt="gap" title="gap"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/next.jpg" alt="next" title="next"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/puma.jpg" alt="puma" title="puma"></a>
-              <a href="shop-product-list.html"><img src="assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
+              <a href="shop-product-list.php"><img src="./assets/pages/img/brands/filizola.png" alt="filizola" title="filizola"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/toledo.png" alt="toledo" title="toledo"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/weightech.jpg" alt="weightech" title="weightech"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/urano.png" alt="urano" title="urano"></a>
+              <a href="shop-product-list.html"><img src="./assets/pages/img/brands/triunfo.png" alt="triunfo" title="triunfo"></a>
+              <a href="shop-product-list.html"><img src="assets/pages/img/brands/digitron.png" alt="digitron" title="digitron"></a>
             </div>
         </div>
     </div>
