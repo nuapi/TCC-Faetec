@@ -45,21 +45,19 @@ include('header.php');
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
                     <img src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"
-                      alt="Produto" 
-                      class="img-responsive" 
-                      style="width: 300px; height: auto;"
-                      data-BigImgsrc="./assets/prodG/<?php echo $row['prod_imagem2'];?>">
+                      alt="Produto"
+                      style="width: 300px; height: auto;">
                   </div>
                   <div class="product-other-images">
-                    <a href="assets/pages/img/products/model3.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
-                    <a href="assets/pages/img/products/model4.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
-                    <a href="assets/pages/img/products/model5.jpg" class="fancybox-button" rel="photos-lib"><img alt="Berry Lace Dress" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
+                    <a href="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="fancybox-button" rel="photos-lib"><img alt="Produto" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
+                    <a href="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="fancybox-button" rel="photos-lib"><img alt="Produto" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
+                    <a href="./assets/prodG/<?php echo $row['prod_imagem2'];?>" class="fancybox-button" rel="photos-lib"><img alt="Produto" src="./assets/prodG/<?php echo $row['prod_imagem2'];?>"></a>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                 <form method="POST" action="shop-shopping-cart.php">
                   <input type="hidden" name="idproduto" value="<?php echo $row['idproduto'];?>"/>
-                  <input type="hidden" name="prod_imagem2" value="<?php echo $row['prod_imagem2'];?>"/>
+                  <input type="hidden" name="prod_imagem" value="<?php echo $row['prod_imagem'];?>"/>
                   <input type="hidden" name="prod_nome" value="<?php echo $row['prod_nome'];?>"/>
                   <input type="hidden" name="prod_preco" value="<?php echo $row['prod_preco'];?>"/>
                   
