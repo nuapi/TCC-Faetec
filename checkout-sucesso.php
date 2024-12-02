@@ -17,7 +17,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Preparar os dados para exibição
 $order = [
-    'idpedido' => $_SESSION['ultimo_pedido']['pedido_id'] ?? 'N/A',
+    'idpedido' => $_SESSION['ultimo_pedido']['idpedido'] ?? 'N/A',
     'data' => $_SESSION['ultimo_pedido']['data'],
     'valorliqbruto' => $_SESSION['ultimo_pedido']['valor_total'],
     'statuspedido' => $_SESSION['ultimo_pedido']['status'],
@@ -44,7 +44,6 @@ foreach ($_SESSION['ultimo_pedido']['itens'] as $item) {
 // Métodos de pagamento traduzidos
 $payment_methods = [
     'pix' => 'PIX',
-    'cartao' => 'Cartão de Crédito',
     'boleto' => 'Boleto Bancário'
 ];
 // O resto do seu HTML permanece o mesmo, mas usando $order e $orderItems

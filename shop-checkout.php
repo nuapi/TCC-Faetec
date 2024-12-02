@@ -376,10 +376,6 @@ include('header.php');
                             <i class="fas fa-qrcode"></i> PIX
                         </label>
                         <label class="payment-method">
-                            <input type="radio" name="metodo_pagamento" value="cartao" required>
-                            <i class="fas fa-credit-card"></i> Cartão de Crédito
-                        </label>
-                        <label class="payment-method">
                             <input type="radio" name="metodo_pagamento" value="boleto" required>
                             <i class="fas fa-barcode"></i> Boleto Bancário
                         </label>

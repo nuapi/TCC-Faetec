@@ -7,6 +7,31 @@ if (!isset($_SESSION['logged_in'])) {
     exit;
 }
 
+// Conexão com o banco de dados
+try {
+    $db = new PDO("mysql:host=localhost;dbname=tcc;charset=utf8mb4", "root", "");
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Buscar informações do cliente
+    $stmt = $db->prepare("SELECT * FROM cliente WHERE idcliente = ?");
+    $stmt->execute([$_SESSION['idcliente']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Buscar endereços do cliente
+    $stmt_enderecos = $db->prepare("SELECT * FROM endereco WHERE cliente_idcliente = ?");
+    $stmt_enderecos->execute([$_SESSION['idcliente']]);
+    $enderecos = $stmt_enderecos->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Buscar pedidos do cliente
+    $stmt_pedidos = $db->prepare("SELECT * FROM pedido WHERE cliente_idcliente = ? ORDER BY data DESC");
+    $stmt_pedidos->execute([$_SESSION['idcliente']]);
+    $pedidos = $stmt_pedidos->fetchAll(PDO::FETCH_ASSOC);
+    
+} catch (PDOException $e) {
+    error_log("Erro ao buscar informações: " . $e->getMessage());
+    $error_message = "Erro ao carregar informações. Por favor, tente novamente mais tarde.";
+}
+
 //Logout
 if(isset($_GET['logout'])){
   if(isset($_SESSION['logged_in'])){
@@ -196,10 +221,8 @@ if (isset($_POST['change_password'])) {
             <ul class="list-group margin-bottom-25 sidebar-menu">
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Editar Informações</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;" id="changePasswordLink"><i class="fa fa-angle-right"></i> Alterar Senha</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> My account</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Address book</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wish list</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Returns</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Meus Pedidos</a></li>
+              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Estornos</a></li>
               <li class="list-group-item clearfix"><a href="account.php?logout=1" id="logout-btn"><i class="fa fa-angle-right"></i> Sair</a></li>
             </ul>
           </div>
@@ -212,6 +235,93 @@ if (isset($_POST['change_password'])) {
             <h1>Minha Conta</h1>
             <div class="content-page">
                 <h3>Olá, <?php if(isset($_SESSION['cli_nome'])){ echo $_SESSION['cli_nome'];} ?></h3>
+
+                <div id="user-info-section">
+    <h3>Informações Pessoais</h3>
+    <p><strong>Nome:</strong> <?php echo htmlspecialchars($user['cli_nome']); ?></p>
+    <p><strong>Email:</strong> <?php echo htmlspecialchars($user['cli_email']); ?></p>
+    
+    <h3>Meus Endereços</h3>
+    <?php if (!empty($enderecos)): ?>
+        <?php foreach ($enderecos as $endereco): ?>
+            <div class="endereco-item">
+                <p>
+                    <strong>Rua:</strong> <?php echo htmlspecialchars($endereco['rua']); ?>, 
+                    <?php echo htmlspecialchars($endereco['num']); ?> - 
+                    <?php echo htmlspecialchars($endereco['bairro']); ?>
+                </p>
+                <p>
+                    <strong>CEP:</strong> <?php echo htmlspecialchars($endereco['cep']); ?>, 
+                    <strong>Cidade:</strong> <?php echo htmlspecialchars($endereco['cidade']); ?>, 
+                    <strong>Estado:</strong> <?php echo htmlspecialchars($endereco['estado']); ?>
+                </p>
+                <?php if ($endereco['endprincipal'] == 'S'): ?>
+                    <span class="badge badge-primary">Endereço Principal</span>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Nenhum endereço cadastrado.</p>
+    <?php endif; ?>
+    
+    <h3>Meus Pedidos</h3>
+    <?php if (!empty($pedidos)): ?>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Número do Pedido</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Valor Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pedidos as $pedido): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($pedido['idpedido']); ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($pedido['data'])); ?></td>
+                        <td><?php echo htmlspecialchars($pedido['statuspedido']); ?></td>
+                        <td>R$ <?php echo number_format($pedido['valorliqbruto'], 2, ',', '.'); ?></td>
+                        <td>
+                            <a href="order-details.php?id=<?php echo $pedido['idpedido']; ?>" class="btn btn-sm btn-info">Detalhes</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>Você ainda não realizou nenhum pedido.</p>
+    <?php endif; ?>
+</div>
+<style>
+    .endereco-item {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.badge-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+</style>
                 
                 <!-- Formulário de alteração de senha (inicialmente oculto) -->
                 <div id="change-password-form" class="password-change-section" style="display: none;">
@@ -236,14 +346,13 @@ if (isset($_POST['change_password'])) {
                         <button type="button" class="btn btn-default" id="cancelPasswordChange">Cancelar</button>
                     </form>
                 </div>
-
+                <hr>
                 <ul>
                     <li><a href="javascript:;">Ver pedidos</a></li>
                     <li><a href="javascript:;" id="changePasswordLink">Mudar senha</a></li>
-                    <li><a href="javascript:;">Mudar endereços</a></li>
+                    <li><a href="shop-shopping-cart.php">Carrinho</a></li>
                     <li><a href="account.php?logout=1" id="logout-btn">Sair</a></li>
                 </ul>
-                <hr>
             </div>
           </div>
           <!-- END CONTENT -->

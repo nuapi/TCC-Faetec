@@ -18,7 +18,6 @@ include('header.php');
               <li class="list-group-item clearfix"><a href="login.php"><i class="fa fa-angle-right"></i> Login/Registrar</a></li>
               <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Nossos Produtos</a></li>
               <li class="list-group-item clearfix"><a href="account.php"><i class="fa fa-angle-right"></i> Minha Conta</a></li>
-              <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Wishlist</a></li>
               <li class="list-group-item clearfix"><a href="javascript:;"><i class="fa fa-angle-right"></i> Notícias</a></li>
             </ul>
 
@@ -26,18 +25,18 @@ include('header.php');
             <address>
               R. Expedicionário Joaquim A. C. Filho, 113<br>
               Paraíba do Sul - RJ<br>
-              <abbr title="Phone">T:</abbr> (24) 99299-2992<br>
+              <abbr title="Phone">T:</abbr> (24) 99308-3680<br>
             </address>
             <address>
               <strong>E-mail</strong><br>
               <a href="mailto:crispel.rj@hotmail.com">crispel.rj@hotmail.com</a><br>
             </address>
             <ul class="social-icons margin-bottom-10">
-              <li><a href="javascript:;" data-original-title="facebook" class="facebook"></a></li>
-              <li><a href="javascript:;" data-original-title="github" class="github"></a></li>
-              <li><a href="javascript:;" data-original-title="Goole Plus" class="googleplus"></a></li>
-              <li><a href="javascript:;" data-original-title="linkedin" class="linkedin"></a></li>
-              <li><a href="javascript:;" data-original-title="rss" class="rss"></a></li>
+              <li><a href="https://www.facebook.com/CrispelRJ" data-original-title="facebook" class="facebook"></a></li>
+              <li><a href="https://www.facebook.com/CrispelRJ" data-original-title="github" class="github"></a></li>
+              <li><a href="https://www.facebook.com/CrispelRJ" data-original-title="Goole Plus" class="googleplus"></a></li>
+              <li><a href="https://www.facebook.com/CrispelRJ" data-original-title="linkedin" class="linkedin"></a></li>
+              <li><a href="https://www.facebook.com/CrispelRJ" data-original-title="rss" class="rss"></a></li>
             </ul>
           </div>
           <!-- END SIDEBAR -->

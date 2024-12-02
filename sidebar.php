@@ -12,7 +12,6 @@
                           <a href="<?php echo "shop-60x40.php?idproduto=8";?>"><i class="fa fa-angle-right"></i> 60x40 </a>
                           <a href="<?php echo "shop-60x40.php?idproduto=18";?>"><i class="fa fa-angle-right"></i> 60x60 </a>
                           <a href="<?php echo "shop-60x40.php?idproduto=5";?>"><i class="fa fa-angle-right"></i> 40x40 </a>
-                          <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 40x60 </a>
                         </li>
                       </ul>
 
@@ -20,8 +19,7 @@
                         <a href="" class="collapsed"><i class="fa fa-angle-right"></i> Para Gôndolas</a>
                           <ul class="dropdown-menu" style="display:block;">
                             <li class="list-group-item dropdown clearfix">
-                              <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 105x40 </a>
-                              <a href="shop-product-list.php"><i class="fa fa-angle-right"></i> 108x30 </a>
+                              <a href="<?php echo "shop-60x40.php?idproduto=19";?>"><i class="fa fa-angle-right"></i> 105x30 </a>
                             </li>
                           </ul>
 
@@ -51,7 +49,7 @@
                           <a href="<?php echo "shop-60x40.php?idproduto=15";?>"><i class="fa fa-angle-right"></i> 110x450 </a>
                         </li>
                       </ul>
-              <li class="list-group-item clearfix"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Todos</a></li>
+              <li class="list-group-item clearfix active"><a href="shop-product-list.php"><i class="fa fa-angle-right"></i> Todos os Produtos</a></li>
             </ul>
 
             <div class="sidebar-filter margin-bottom-25">
