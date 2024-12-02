@@ -167,7 +167,7 @@ include('header.php');
                   <div class="pi-img-wrapper" style="max-width: 250px; margin: 0 auto;"> <!-- Adicionado max-width e margin -->
                     <img src="./assets/prodG/<?php echo $row['prod_imagem'];?>" class="img-responsive" alt="Berry Lace Dress" style="max-height: 200px; width: auto;"> <!-- Adicionado max-height -->
                     <div>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">Ver</a>
+                      <a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>" class="btn btn-default fancybox-fast-view">Ver</a>
                     </div>
                   </div>
                   <h3><a href="<?php echo "shop-60x40.php?idproduto=". $row['idproduto'];?>"><?php echo $row['prod_nome'];?></a></h3>
